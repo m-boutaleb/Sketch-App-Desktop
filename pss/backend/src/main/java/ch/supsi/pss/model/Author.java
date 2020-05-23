@@ -16,7 +16,7 @@ public class Author {
     }
 
     /**
-     * Costruttore usato per inizializzare un nuovo utente letto da file
+     * Costruttore usato solo per inizializzare un nuovo utente letto da file
      * @param id dell'utente
      * @param firstNames i nomi dell'utente
      * @param lastNames i cognomi dell'utente

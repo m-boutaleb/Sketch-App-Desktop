@@ -5,8 +5,6 @@ import ch.supsi.pss.repository.SketchRepository;
 import java.time.LocalDateTime;
 import java.util.*;
 
-/*Classe che rappresenta lo sketch */
-
 public class Sketch {
     private Author author;
     private LocalDateTime time;
@@ -45,7 +43,7 @@ public class Sketch {
     }
 
     /**
-     * Costruttore usato per fare update di uno sketch
+     * Costruttore usato solo per fare update di uno sketch
      * @param oldSketchUUID vecchio UUID dello sketch da aggiornare
      * @param newSketch immagine rappresentante il nuovo sketch
      * @param allTags tutti i tags associati al nuovo tag
@@ -66,7 +64,7 @@ public class Sketch {
     }
 
     /**
-     * Questo costruttore usato principalmente per creare un nuovo sketch caricandolo da file
+     * Questo costruttore usato solo per creare un nuovo sketch caricandolo da file
      * @param UUID uuid dello sketch
      * @param author utente che ha fatto l'ultima modifica allo sketch
      * @param time data e ora in cui è stato creato lo sketch

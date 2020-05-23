@@ -5,33 +5,36 @@
 <?import javafx.geometry.Insets?>
 
 
-<BorderPane prefHeight="205.0" stylesheets="/css/config.css" maxWidth="400" prefWidth="360.0" fx:controller="ch.supsi.pss.controller.Tag" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="205.0" stylesheets="/css/config.css" maxWidth="430" minWidth="370" fx:controller="ch.supsi.pss.controller.Tag" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
     <center>
-        <HBox alignment="CENTER" prefHeight="48.0" prefWidth="387.0" spacing="10.0" BorderPane.alignment="CENTER">
-            <children>
-                <Label text="%tag.name" styleClass="h3Bold"/>
-                <TextField promptText="Insert Tag name" prefHeight="30.0" fx:id="newTag" prefWidth="200.0" />
-                <Button text="%tag.save" prefHeight="30.0" onAction="#saveTag" />
-            </children>
+        <HBox alignment="CENTER" prefHeight="48.0" prefWidth="400.0" spacing="7" BorderPane.alignment="CENTER">
+            <Label text="%tag.name" styleClass="h3Bold"/>
+            <TextField promptText="Insert Tag name" prefHeight="30.0" fx:id="newTag" maxWidth="370.0" minWidth="240"/>
+            <Button text="%tag.save" prefHeight="30.0" onAction="#saveTag"/>
         </HBox>
     </center>
     <top>
         <Label alignment="CENTER" text="%tag.add" styleClass="h2Bold" BorderPane.alignment="CENTER" />
     </top>
     <bottom>
-        <VBox alignment="CENTER_RIGHT" prefHeight="123.0" prefWidth="432.0" BorderPane.alignment="CENTER">
-            <children>
-                <ScrollPane prefHeight="80.0" styleClass="canvasPropertyPane" fitToWidth="true" hbarPolicy="NEVER">
-                    <FlowPane fx:id="allTagsPane">
-
-                    </FlowPane>
-                </ScrollPane>
-                <Button text="%button.ok" defaultButton="true" onAction="#saveAndClose" styleClass="defaultFontBold, defaultButton">
-                    <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                    </VBox.margin>
-                </Button>
-            </children>
+        <VBox alignment="CENTER_RIGHT" spacing="5" prefHeight="123.0" prefWidth="350.0" BorderPane.alignment="CENTER">
+            <Label alignment="BASELINE_LEFT" text="%tag.alltags" prefWidth="400.0" styleClass="h3Bold">
+                <VBox.margin>
+                    <Insets left="10.0" right="10.0"/>
+                </VBox.margin>
+            </Label>
+            <ScrollPane prefHeight="120.0" styleClass="canvasPropertyPane" fitToWidth="true" hbarPolicy="NEVER">
+                <VBox.margin>
+                    <Insets left="12.0" right="12.0"/>
+                </VBox.margin>
+                <FlowPane fx:id="allTagsPane"/>
+            </ScrollPane>
+            <Button text="%button.ok" defaultButton="true" onAction="#saveAndClose"
+                    styleClass="defaultFontBold, defaultButton">
+                <VBox.margin>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                </VBox.margin>
+            </Button>
         </VBox>
     </bottom>
 </BorderPane>

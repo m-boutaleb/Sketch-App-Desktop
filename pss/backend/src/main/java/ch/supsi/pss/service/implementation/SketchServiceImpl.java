@@ -75,4 +75,9 @@ public class SketchServiceImpl implements SketchService {
     public Sketch openSketch(final String path, final String sketchName) {
         return sketchRepository.openSketch(path, sketchName);
     }
+
+    @Override
+    public Set<Sketch> getAllSketches() {
+        return sketchRepository.getAllSketches();
+    }
 }

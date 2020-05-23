@@ -2,7 +2,7 @@ package ch.supsi.pss.controller;
 
 import ch.supsi.pss.PssFx;
 import ch.supsi.pss.bundles.ResourceBundlePss;
-import ch.supsi.pss.utility.DialogUtilities;
+import ch.supsi.pss.utils.DialogUtils;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,6 +15,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -53,8 +54,13 @@ public class Menu implements Initializable {
 
     @FXML
     public void openSketch(final ActionEvent actionEvent) {
-        checkIfAllSaved();
-        new FileChooser().showOpenDialog(stage.getScene().getWindow());
+        // Set extension filter
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("SKETCH files (*.skt)","*.skt");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(extFilter);
+        File selectedFile = fileChooser.showOpenDialog(stage.getScene().getWindow());
+        OpenSketch sketchOpener = new OpenSketch();
+        sketchOpener.openSelectedSketch(selectedFile);
     }
 
     public void initData(final Stage stage){
@@ -76,7 +82,7 @@ public class Menu implements Initializable {
     private void checkIfAllSaved() {
         if(newSketchController!=null&&newSketchController.isDrawing()) {
             var res = ResourceBundlePss.getInstance().getLangBundles();
-            DialogUtilities.displayYesNoAlert(newSketchController, stage, res.getString("application.quit"),
+            DialogUtils.displayYesNoAlert(newSketchController, stage, res.getString("application.quit"),
                     res.getString("application.quit.header"),
                     res.getString("application.quit.context"));
         }
@@ -156,7 +162,7 @@ public class Menu implements Initializable {
     public void tag(final ActionEvent actionEvent) {
         if(!checkSketch()) {
             var res=ResourceBundlePss.getInstance().getLangBundles();
-            DialogUtilities.displayAlert(res.getString("tag.title"),
+            DialogUtils.displayAlert(res.getString("tag.title"),
                     res.getString("tag.error.header")  , res.getString("tag.error.context"));
             return;
         }
@@ -172,6 +178,7 @@ public class Menu implements Initializable {
         loader.<Tag>getController().initData(tagStage, newSketchController.getAllTags());
         PssFx.setDefaultIcon(tagStage);
         tagStage.setScene(new Scene(root));
+        tagStage.setResizable(false);
         tagStage.initModality(Modality.APPLICATION_MODAL);
         tagStage.setTitle(ResourceBundlePss.getInstance().getLangBundles().getString("tag.title"));
         tagStage.show();

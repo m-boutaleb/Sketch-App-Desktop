@@ -8,7 +8,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import java.io.*;
 
-import static ch.supsi.pss.utility.FileManagerUtilities.DEFAULT_OS_PATH;
+import static ch.supsi.pss.utils.FileUtils.DEFAULT_OS_PATH;
 
 public class PreferencesRepository {
     private static PreferencesRepository instance;
@@ -58,13 +58,13 @@ public class PreferencesRepository {
         PssLogger.getInstance().info("UPDATING PREFERENCES...", getClass());
         final File dir=new File(DEFAULT_OS_PATH+PssProperties.getInstance().getProperty("preferences.directory"));
         if(!dir.exists())
-            PssLogger.getInstance().info(dir.mkdir()?"NEW PREF DIR CREATED":"ERROR CREATING PREF DIR", this.getClass());
+            PssLogger.getInstance().info(dir.mkdirs()?"NEW PREF DIR CREATED":"ERROR CREATING PREF DIR", this.getClass());
         try (Writer writer = new FileWriter(DEFAULT_OS_PATH+ PssProperties.getInstance().getProperty("preferences.file"))) {
             writer.write(prefsJson.toString());
         } catch (FileNotFoundException e) {
-            PssLogger.getInstance().error("ERROR WHILE LOADING PROPERTY FILE",this.getClass());
+            PssLogger.getInstance().error("ERROR WHILE CREATING CONFS DIRECTORY",this.getClass());
         } catch (IOException e) {
-            PssLogger.getInstance().error("ERROR WHILE READING PROPERTY FILE",this.getClass());
+            PssLogger.getInstance().error("ERROR WHILE WRITING CONF FILE",this.getClass());
         }
         setPrefs(new String[]{newPrefPath, newPrefLanguage.toString()});
         return true;

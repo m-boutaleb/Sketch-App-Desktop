@@ -3,7 +3,7 @@ package ch.supsi.pss.model;
 import java.io.IOException;
 import java.util.Properties;
 
-import static ch.supsi.pss.utility.FileManagerUtilities.PROPERTY_FILE_NAME;
+import static ch.supsi.pss.utils.FileUtils.PROPERTY_FILE_NAME;
 
 public class PssProperties {
     private static PssProperties instance;

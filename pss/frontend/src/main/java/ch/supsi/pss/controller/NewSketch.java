@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-import static ch.supsi.pss.utility.ClientUtilities.*;
+import static ch.supsi.pss.utils.ClientUtils.*;
 
 public class NewSketch {
     @FXML
@@ -58,7 +58,7 @@ public class NewSketch {
         canvas.setWidth(HD?CANVAS_WIDTH_HD:CANVAS_WIDTH_PORTRAIT);
         canvasPane.setMaxWidth(canvas.getWidth());
         canvasPane.setMaxHeight(canvas.getHeight());
-        stage.setWidth(canvasPane.getMaxWidth()+10);
+        stage.setWidth(canvasPane.getMaxWidth()+15);
         stage.setHeight(canvasPane.getMaxHeight()+110);
         stage.setResizable(false);
         stage.show();
@@ -70,9 +70,8 @@ public class NewSketch {
 
     public void save(final MouseEvent mouseEvent) {
         SnapshotParameters snapshotParameters = new SnapshotParameters();
-        snapshotParameters.setTransform(new Scale((HD?2.3:1.9), (HD?1.9:2.3)));
         WritableImage writableImage = new WritableImage((HD? HD_WIDTH : PORTRAIT_WIDTH),(HD? HD_HEIGHT : PORTRAIT_HEIGHT));
-        WritableImage snapshot=canvas.snapshot(snapshotParameters, writableImage);
+        WritableImage snapshot=canvas.snapshot(null, writableImage);
         BufferedImage image= SwingFXUtils.fromFXImage(snapshot, null);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {

@@ -1,27 +1,28 @@
 package ch.supsi.pss.service;
 
+import ch.supsi.pss.model.Author;
 import ch.supsi.pss.model.Sketch;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 public interface JSONService {
-    /**
-     * Metodo che si occupa di trasformare uno Sketch a JSON
-     * @param sketchToParse sketch da trasformare
-     * @return nuovo oggetto JSON creato
-     */
     JSONObject fromSketchToJSON(final Sketch sketchToParse);
 
-    /**
-     * Metodo che si occupa di trasformare una stringa rappresentante
-     * il percorso dove salvare gli sketch in oggetto JSON
-     * @param newUserPrefPathDir percorso dove salvare sketch
-     * @return JSONObject ottenuto dalla trasformazione
-     */
     JSONObject fromPreferencesToJSON(final String newUserPrefPathDir, final String newUserPrefLanguage);
 
-    /**
-     * Metodo che crea sketch partendo da uno sketch
-     * @param sketch sketch da trasformare in JSONObject
-     */
-    void createSketchByJSON(final JSONObject sketch);
+    static Sketch createSketchByJSON(final JSONObject sketchJSON){
+        final JSONObject currUser = (JSONObject) sketchJSON.get("User");
+        final JSONArray currTags = (JSONArray) sketchJSON.get("Tags");
+        final Set<String> allTags = new HashSet<>(currTags);
+        return new Sketch(UUID.fromString(sketchJSON.get("UUID").toString()),
+                new Author(Long.valueOf(currUser.get("id").toString()),
+                        currUser.get("firstNames").toString(),
+                        currUser.get("lastNames").toString()), LocalDateTime.parse(sketchJSON.get("Date").toString()), allTags);
+    };
 }

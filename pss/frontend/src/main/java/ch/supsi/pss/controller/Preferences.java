@@ -2,7 +2,7 @@ package ch.supsi.pss.controller;
 
 import ch.supsi.pss.bundles.ResourceBundlePss;
 import ch.supsi.pss.model.Language;
-import ch.supsi.pss.utility.DialogUtilities;
+import ch.supsi.pss.utils.DialogUtils;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -51,7 +51,7 @@ public class Preferences {
 
     private void displayInputRequest(){
         var res= ResourceBundlePss.getInstance().getLangBundles();
-        DialogUtilities.displayAlert(res.getString("preferences.title"), res.getString("preferences.error.header"), res.getString("preferences.error.context"));
+        DialogUtils.displayAlert(res.getString("preferences.title"), res.getString("preferences.error.header"), res.getString("preferences.error.context"));
     }
 
     private void savePreferences(MouseEvent mouseEvent){
@@ -63,7 +63,7 @@ public class Preferences {
 
         if(languageChosen!=SketchController.getInstance().getPrefLang()) {
             var res=ResourceBundlePss.getInstance().getLangBundles();
-            DialogUtilities.displayAlert(res.getString("preferences.title"), res.getString("preferences.language.update.header"),
+            DialogUtils.displayAlert(res.getString("preferences.title"), res.getString("preferences.language.update.header"),
                     res.getString("preferences.language.update.context"));
         }
         if(loadLocation!=null&&!loadLocation.getText().equals("")) {

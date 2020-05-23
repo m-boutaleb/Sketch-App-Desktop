@@ -22,17 +22,6 @@ public class JSONServiceImpl implements JSONService {
     }
 
     @Override
-    public void createSketchByJSON(final JSONObject sketch) {
-        final JSONObject currUser = (JSONObject) sketch.get("User");
-        final JSONArray currTags = (JSONArray) sketch.get("Tags");
-        final Set<String> allTags = new HashSet<>(currTags);
-        SketchRepository.getInstance().addSketchToRepo(new Sketch(UUID.fromString(sketch.get("UUID").toString()),
-                new Author(Long.valueOf(currUser.get("id").toString()),
-                        currUser.get("firstNames").toString(),
-                        currUser.get("lastNames").toString()), LocalDateTime.parse(sketch.get("Date").toString()), allTags));
-    }
-
-    @Override
     public JSONObject fromSketchToJSON(final Sketch sketchToParse) {
         JSONObject sketchData = new JSONObject();
         sketchData.put("UUID", sketchToParse.getUUID().toString());

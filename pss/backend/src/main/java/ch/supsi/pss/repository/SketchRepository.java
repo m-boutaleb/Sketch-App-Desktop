@@ -1,11 +1,10 @@
 package ch.supsi.pss.repository;
 
-import ch.supsi.pss.model.Author;
 import ch.supsi.pss.model.PssLogger;
 import ch.supsi.pss.model.Sketch;
 import ch.supsi.pss.model.SketchDateComparator;
-import ch.supsi.pss.utility.GenericExtensionFilter;
-import org.json.simple.JSONArray;
+import ch.supsi.pss.service.JSONService;
+import ch.supsi.pss.model.GenericExtensionFilter;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -13,12 +12,11 @@ import org.json.simple.parser.ParseException;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.function.Predicate;
 
-import static ch.supsi.pss.utility.FileManagerUtilities.METADATA_EXTENSION;
-import static ch.supsi.pss.utility.FileManagerUtilities.SKETCH_EXTENSION;
+import static ch.supsi.pss.utils.FileUtils.METADATA_EXTENSION;
+import static ch.supsi.pss.utils.FileUtils.SKETCH_EXTENSION;
 
 public class SketchRepository {
     private static SketchRepository instance;
@@ -71,14 +69,7 @@ public class SketchRepository {
     private void loadAllMtdFiles(final String prefPathDir,boolean existingSketch, final String... mtdFiles) {
         for(final var uuid: mtdFiles){
             try (FileReader reader = new FileReader(prefPathDir+File.separator+uuid)) {
-                JSONObject jsonObject = (JSONObject) new JSONParser().parse(reader);
-                final JSONObject currUser = (JSONObject) jsonObject.get("User");
-                final JSONArray currTags = (JSONArray) jsonObject.get("Tags");
-                final Set<String> allTags = new HashSet<>(currTags);
-                final Sketch sketch=new Sketch(UUID.fromString(jsonObject.get("UUID").toString()),
-                        new Author(Long.valueOf(currUser.get("id").toString()),
-                                currUser.get("firstNames").toString(),
-                                currUser.get("lastNames").toString()), LocalDateTime.parse(jsonObject.get("Date").toString()), allTags);
+                final Sketch sketch=JSONService.createSketchByJSON((JSONObject) new JSONParser().parse(reader));
                 if(existingSketch){
                     this.existingSketch=sketch;
                     return;
@@ -157,7 +148,7 @@ public class SketchRepository {
 
     public Sketch openSketch(final String path, final String sketchName) {
         var index= sketchName.lastIndexOf(".");
-        loadAllMtdFiles(path,true, sketchName.substring(0, index).replace(".", ""));
+        loadAllMtdFiles(path,true, sketchName.substring(0, index).concat(METADATA_EXTENSION));
         loadAllSktFiles(path, true,sketchName);
         return existingSketch;
     }

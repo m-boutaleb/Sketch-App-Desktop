@@ -13,7 +13,7 @@ import java.util.Set;
 
 public class SketchController {
     private static SketchController instance;
-    private final SketchService sketchService;
+    private static SketchService sketchService;
     private final IdService idService;
     private final TimeService timeService;
 
@@ -47,6 +47,10 @@ public class SketchController {
         if(instance==null)
             instance=new SketchController();
         return instance;
+    }
+
+    public Set<Sketch> getAllSketches(){
+        return sketchService.getAllSketches();
     }
 
     public void loadSketchData() {
