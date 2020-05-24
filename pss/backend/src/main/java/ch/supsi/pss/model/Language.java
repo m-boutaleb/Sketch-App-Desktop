@@ -7,6 +7,9 @@ public enum Language {
         this.language=language;
     }
     public static Language fromStringToEnum(final String lowerCaseEnum){
+        if(lowerCaseEnum==null||lowerCaseEnum.equals("")) {
+            PssLogger.getInstance().error(new IllegalArgumentException("NO PREF LANGUAGE FOUND..."), Language.class);return null;
+        }
         return Language.valueOf(lowerCaseEnum.toUpperCase());
     }
     @Override

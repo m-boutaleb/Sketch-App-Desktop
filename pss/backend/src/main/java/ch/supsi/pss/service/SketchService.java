@@ -14,9 +14,7 @@ public interface SketchService {
 
     boolean updateSketch(final byte[] newSketch, final Set<String> allTags, final Author author, final LocalDateTime time);
 
-    boolean updatePreferences(final String newPrefPathDir, final Language newPrefLanguage);
-
-    boolean loadPreferences();
+    void updatePreferences(final String newPrefPathDir, final Language newPrefLanguage);
 
     boolean loadAllSketchData();
 

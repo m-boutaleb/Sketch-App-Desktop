@@ -23,8 +23,8 @@ public class SketchController {
         timeService= TimeServiceImpl.getInstance();
     }
 
-    public boolean updatePreferences(final String newPrefPathDir,final Language newPrefLanguage){
-        return sketchService.updatePreferences(newPrefPathDir, newPrefLanguage);
+    public void updatePreferences(final String newPrefPathDir,final Language newPrefLanguage){
+        sketchService.updatePreferences(newPrefPathDir, newPrefLanguage);
     }
 
     public Sketch openExistingSketch(final String path, final String sketchName){
@@ -37,10 +37,6 @@ public class SketchController {
     
     public Language getPrefLang(){
         return sketchService.getPrefLang();
-    }
-
-    public boolean loadPreferences(){
-        return sketchService.loadPreferences();
     }
 
     public static SketchController getInstance(){

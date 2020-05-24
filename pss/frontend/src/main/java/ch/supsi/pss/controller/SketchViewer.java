@@ -36,30 +36,6 @@ public class SketchViewer {
         return thumb;
     }
 
-
-//
-//    public Stage getSearchResults(final Sketch... sketch){
-//
-//        stage=new Stage();
-//
-//        if((sketch.length==0)){
-//            TableView<Sketch> results = getTableView(sketch);
-//            results.setPlaceholder(new Label("No sketch founds"));
-//            ScrollPane pane = new ScrollPane(results);
-//            pane.setFitToWidth(true);
-//            pane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-//
-//            final Scene resultScene = new Scene(pane);
-//            stage.setScene(resultScene);
-//            stage.show();
-//
-//            return stage;
-//        }
-//        return null;
-//    }
-
-
-
     public void getAndShowTableView(final Sketch... sketch){
         stage=new Stage();
         TableView<Sketch> resultTable = getTableView(sketch);
@@ -71,8 +47,6 @@ public class SketchViewer {
         stage.setScene(new Scene(pane));
         stage.show();
     }
-
-
 
     private TableView<Sketch> getTableView(final Sketch... results){
         var langRes=ResourceBundlePss.getInstance();
@@ -185,6 +159,8 @@ public class SketchViewer {
                     tagsColumn.setPrefWidth(stage.getWidth()*50/100);
                     thumbColumn.setPrefWidth(stage.getWidth()*50/100);
                 });
+        stage.setMinWidth(400);
+        stage.setMinHeight(300);
 
         resultTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 

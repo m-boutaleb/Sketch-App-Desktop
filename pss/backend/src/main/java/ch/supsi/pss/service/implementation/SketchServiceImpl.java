@@ -7,7 +7,6 @@ import ch.supsi.pss.repository.PreferencesRepository;
 import ch.supsi.pss.repository.SketchRepository;
 import ch.supsi.pss.service.JSONService;
 import ch.supsi.pss.service.SketchService;
-
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
@@ -47,14 +46,10 @@ public class SketchServiceImpl implements SketchService {
     }
 
     @Override
-    public boolean updatePreferences(final String newPrefPathDir, final Language newPrefLanguage) {
-        return preferencesRepository.updatePreferences(newPrefPathDir, newPrefLanguage,jsonService.fromPreferencesToJSON(newPrefPathDir, newPrefLanguage.toString()));
+    public void updatePreferences(final String newPrefPathDir, final Language newPrefLanguage) {
+        preferencesRepository.updatePreferences(newPrefPathDir, newPrefLanguage);
     }
 
-    @Override
-    public boolean loadPreferences() {
-        return preferencesRepository.loadPreferences();
-    }
 
     @Override
     public boolean loadAllSketchData() {

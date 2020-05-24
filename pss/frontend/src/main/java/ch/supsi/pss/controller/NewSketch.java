@@ -12,9 +12,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
-import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -70,7 +68,7 @@ public class NewSketch {
 
     public void save(final MouseEvent mouseEvent) {
         SnapshotParameters snapshotParameters = new SnapshotParameters();
-        WritableImage writableImage = new WritableImage((HD? HD_WIDTH : PORTRAIT_WIDTH),(HD? HD_HEIGHT : PORTRAIT_HEIGHT));
+        WritableImage writableImage = new WritableImage((HD? CANVAS_WIDTH_HD : CANVAS_WIDTH_PORTRAIT),(HD? CANVAS_HEIGHT_HD : CANVAS_HEIGHT_PORTRAIT));
         WritableImage snapshot=canvas.snapshot(null, writableImage);
         BufferedImage image= SwingFXUtils.fromFXImage(snapshot, null);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -84,12 +82,13 @@ public class NewSketch {
     }
 
     private void checkAndSave(final byte[] updatedSketch) {
+        var defaultSystemUser=System.getProperty("user.name");
         if(!alreadySaved) {
-            SketchController.getInstance().newSketch(updatedSketch, alltags, new Author(System.getProperty("user.name"), ""));
+            SketchController.getInstance().newSketch(updatedSketch, alltags, new Author(defaultSystemUser));
             alreadySaved=true;
             return;
         }
-        SketchController.getInstance().updateSketch(updatedSketch,alltags,new Author("Mohamed", "Boutaleb"));
+        SketchController.getInstance().updateSketch(updatedSketch,alltags,new Author(defaultSystemUser));
         drawing=false;
     }
 

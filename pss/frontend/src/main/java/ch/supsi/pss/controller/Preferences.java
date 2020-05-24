@@ -55,6 +55,7 @@ public class Preferences {
     }
 
     private void savePreferences(MouseEvent mouseEvent){
+        var sketchController=SketchController.getInstance();
         if(saveLocation ==null||languageBox ==null||saveLocation.getText() ==null||saveLocation.getText().equals("")||languageBox.getSelectionModel().getSelectedItem()==null){
             displayInputRequest();
             return;
@@ -66,11 +67,11 @@ public class Preferences {
             DialogUtils.displayAlert(res.getString("preferences.title"), res.getString("preferences.language.update.header"),
                     res.getString("preferences.language.update.context"));
         }
-        if(loadLocation!=null&&!loadLocation.getText().equals("")) {
-            SketchController.getInstance().updatePreferences(loadLocation.getText(),languageChosen);
-            SketchController.getInstance().loadSketchData();
-        }
-        SketchController.getInstance().updatePreferences(saveLocation.getText(),languageChosen);
+
+        if(loadLocation!=null&&!loadLocation.getText().equals(""))
+            sketchController.loadSketchData();
+
+        sketchController.updatePreferences(saveLocation.getText(),languageChosen);
         this.stage.close();
     }
 

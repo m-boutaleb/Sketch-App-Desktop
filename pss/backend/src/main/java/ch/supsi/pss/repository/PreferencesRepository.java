@@ -2,37 +2,30 @@ package ch.supsi.pss.repository;
 
 import ch.supsi.pss.model.Language;
 import ch.supsi.pss.model.PssLogger;
-import ch.supsi.pss.model.PssProperties;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import java.io.*;
-
-import static ch.supsi.pss.utils.FileUtils.DEFAULT_OS_PATH;
+import java.util.prefs.Preferences;
 
 public class PreferencesRepository {
     private static PreferencesRepository instance;
+    private static final String USER_PREF_LANGUAGE="user.language";
+    private static final String USER_PREF_PATH="user.path";
+    private final Preferences prefs;
     private String prefPathDir;
     private Language prefLanguage;
 
     private PreferencesRepository(){
+        prefs=Preferences.userRoot().node(this.getClass().getName());
     }
 
     public Language getPrefLanguage() {
+        PssLogger.getInstance().info("LOADING PREF LANGUAGE...", getClass());
+        prefLanguage=Language.fromStringToEnum(prefs.get(USER_PREF_LANGUAGE ,""));
         return prefLanguage;
     }
 
     public String getPrefPathDir() {
+        PssLogger.getInstance().info("LOADING PREF PATH...", getClass());
+        prefPathDir=prefs.get(USER_PREF_PATH, "");
         return prefPathDir;
-    }
-
-    public void setPrefs(final String[] prefs) {
-        if(prefs==null||prefs.length==0||prefs[0]==null||prefs[1]==null) {
-            PssLogger.getInstance().info("NO PREFS DIR FOUND", this.getClass());
-            return;
-        }
-        this.prefPathDir = prefs[0];
-        this.prefLanguage=Language.fromStringToEnum(prefs[1]);
     }
 
     public static PreferencesRepository getInstance() {
@@ -41,32 +34,14 @@ public class PreferencesRepository {
         return instance;
     }
 
-    public boolean loadPreferences(){
-        PssLogger.getInstance().info("LOADING PREFERENCES...", getClass());
-        try(Reader reader = new FileReader(DEFAULT_OS_PATH+ PssProperties.getInstance().getProperty("preferences.file"))) {
-            JSONObject jsonObject = (JSONObject) new JSONParser().parse(reader);
-            setPrefs(new String[]{(String) jsonObject.get("SavePath"),(String) jsonObject.get("Language") });
-        } catch (ParseException e) {
-            PssLogger.getInstance().error("ERROR WHILE PARSING JSON OBJECT", this.getClass());
-        } catch (IOException ex) {
-            PssLogger.getInstance().error("ERROR WHILE READING PROPERTY FILE", getClass());
-        }
-        return true;
+    public void loadPreferences(){
+        prefPathDir=prefs.get(USER_PREF_PATH, "");
     }
 
-    public boolean updatePreferences(final String newPrefPath,final Language newPrefLanguage, JSONObject prefsJson){
+    public void updatePreferences(final String newPrefPath,final Language newPrefLanguage){
         PssLogger.getInstance().info("UPDATING PREFERENCES...", getClass());
-        final File dir=new File(DEFAULT_OS_PATH+PssProperties.getInstance().getProperty("preferences.directory"));
-        if(!dir.exists())
-            PssLogger.getInstance().info(dir.mkdirs()?"NEW PREF DIR CREATED":"ERROR CREATING PREF DIR", this.getClass());
-        try (Writer writer = new FileWriter(DEFAULT_OS_PATH+ PssProperties.getInstance().getProperty("preferences.file"))) {
-            writer.write(prefsJson.toString());
-        } catch (FileNotFoundException e) {
-            PssLogger.getInstance().error("ERROR WHILE CREATING CONFS DIRECTORY",this.getClass());
-        } catch (IOException e) {
-            PssLogger.getInstance().error("ERROR WHILE WRITING CONF FILE",this.getClass());
-        }
-        setPrefs(new String[]{newPrefPath, newPrefLanguage.toString()});
-        return true;
+        prefs.put(USER_PREF_LANGUAGE, newPrefLanguage.toString());
+        prefs.put(USER_PREF_PATH, newPrefPath);
+        loadPreferences();
     }
 }

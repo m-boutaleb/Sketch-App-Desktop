@@ -6,7 +6,7 @@ import ch.supsi.pss.controller.SketchController;
 import ch.supsi.pss.controller.SketchViewer;
 import ch.supsi.pss.model.Sketch;
 import ch.supsi.pss.utils.DialogUtils;
-import ch.supsi.pss.utils.SearchUtilities;
+import ch.supsi.pss.utils.SearchUtils;
 import javafx.stage.Stage;
 
 import java.util.Set;
@@ -25,7 +25,7 @@ public class SketchDisplay {
 
     public void displayResults(final String text) {
         final Set<Sketch> allSketch = SketchController.getInstance().getAllSketches();
-        final Set<Sketch> results = SearchUtilities.searchSketchByTag(allSketch, text);
+        final Set<Sketch> results = SearchUtils.searchSketchByTag(allSketch, text);
 
         if (!text.equals("") && !results.isEmpty()) {
             final Sketch array[]=new Sketch[results.size()];

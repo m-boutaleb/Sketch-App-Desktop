@@ -23,13 +23,10 @@ public class SplashScreen implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
-        new UserInfoLauncher().start();
+        new PssLauncher().start();
     }
 
-    /**
-     * Nested class che lancia il menu principale insieme alle preferenze
-     */
-    class UserInfoLauncher extends Thread{
+    class PssLauncher extends Thread{
         @Override
         public void run() {
             try {

@@ -19,7 +19,6 @@ public class ResourceBundlePss {
     }
 
     private ResourceBundlePss(){
-        SketchController.getInstance().loadPreferences();
         Language language=SketchController.getInstance().getPrefLang();
         if(language==null){
             langBundles =ResourceBundle.getBundle("pss_ita");
