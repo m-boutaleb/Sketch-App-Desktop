@@ -15,10 +15,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-/**
- * Classe che si occupa di lanciare lo splash screen e di lanciare la schermata che si occupa
- * di chiedere le info all'utente
- */
 public class SplashScreen implements Initializable {
     public Stage stage = new Stage();
 

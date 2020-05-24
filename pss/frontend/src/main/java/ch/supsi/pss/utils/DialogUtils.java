@@ -10,8 +10,7 @@ import java.util.Optional;
 
 public class DialogUtils {
     /**
-     * Mostra un Alert con il risultato dell'exception o errore a cui si è andati in
-     * contro
+     * Mostra un Alert con il risultato dell'exception o errore che si è generato
      * @param titleMessage messaggio che riassume l'azione che ha generato il warning
      * @param headerMessage titolo rappresentativo dell'Errore
      * @param contextMessage messaggio contenente un consiglio per cosa fare per ovviare il problema
@@ -26,7 +25,7 @@ public class DialogUtils {
     }
 
     /**
-     * Metodo che mostra alert la cui chiusura è possibile solo scegliendo un'opzione tra yes o no
+     * Metodo che mostra alert la cui chiusura è possibile solo scegliendo un'opzione tra "yes" o "no"
      * @param newSkethController istanza del controller che si sta occupando dello sketch dove si chiede il salvataggio
      * @param stage Owner dell'alert
      * @param titleMessage messaggio che riassume l'azione che ha generato il warning
