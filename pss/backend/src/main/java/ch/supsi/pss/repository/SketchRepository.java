@@ -1,10 +1,7 @@
 package ch.supsi.pss.repository;
 
-import ch.supsi.pss.model.PssLogger;
-import ch.supsi.pss.model.Sketch;
-import ch.supsi.pss.model.SketchDateComparator;
+import ch.supsi.pss.model.*;
 import ch.supsi.pss.service.JSONService;
-import ch.supsi.pss.model.GenericExtensionFilter;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -52,7 +49,7 @@ public class SketchRepository {
 
 
 
-    private void loadAllSktFiles(final String prefPathDir,boolean existingSketch, final String... sktFiles) {
+    private void loadAllSktFiles(final String prefPathDir,boolean existingSketch,final SketchSerializer sketchSerializer,  final String... sktFiles) {
         for(final var uuid: sktFiles)
             try (final FileInputStream inputStream= new FileInputStream(prefPathDir+File.separator+uuid)) {
                 byte[] image=inputStream.readAllBytes();
@@ -66,10 +63,10 @@ public class SketchRepository {
             }
     }
 
-    private void loadAllMtdFiles(final String prefPathDir,boolean existingSketch, final String... mtdFiles) {
+    private void loadAllMtdFiles(final String prefPathDir,boolean existingSketch,final SketchSerializer sketchSerializer , final String... mtdFiles) {
         for(final var uuid: mtdFiles){
             try (FileReader reader = new FileReader(prefPathDir+File.separator+uuid)) {
-                final Sketch sketch=JSONService.createSketchByJSON((JSONObject) new JSONParser().parse(reader));
+                final Sketch sketch=sketchSerializer.createSketchByJSON((JSONObject) new JSONParser().parse(reader));
                 if(existingSketch){
                     this.existingSketch=sketch;
                     return;
@@ -83,7 +80,7 @@ public class SketchRepository {
         }
     }
 
-    public boolean loadAllSketchData(final String prefPathDir){
+    public boolean loadAllSketchData(final String prefPathDir, final SketchSerializer sketchSerializer){
         PssLogger.getInstance().info("READING ALL DATA...", getClass());
         final GenericExtensionFilter filterBySketch= new GenericExtensionFilter(SKETCH_EXTENSION);
         final GenericExtensionFilter filterByMetadata= new GenericExtensionFilter(METADATA_EXTENSION);
@@ -104,8 +101,8 @@ public class SketchRepository {
         }else if(mtdFiles.length!=sktFiles.length)
             PssLogger.getInstance().error("THERE ARE SOME SKETCHES/METADATA WITH NO METADATA/SKETCHES INFO", getClass());
 
-        loadAllMtdFiles(prefPathDir,false,mtdFiles);
-        loadAllSktFiles(prefPathDir,false,sktFiles);
+        loadAllMtdFiles(prefPathDir,false,sketchSerializer,mtdFiles);
+        loadAllSktFiles(prefPathDir,false,sketchSerializer,sktFiles);
         PssLogger.getInstance().info("ALL SKETCHES LOADED WITH SUCCESS", getClass());
         return true;
     }
@@ -146,10 +143,10 @@ public class SketchRepository {
         return copy.get(0).getUUID();
     }
 
-    public Sketch openSketch(final String path, final String sketchName) {
+    public Sketch openSketch(final String path, final String sketchName, final SketchSerializer sketchSerializer) {
         var index= sketchName.lastIndexOf(".");
-        loadAllMtdFiles(path,true, sketchName.substring(0, index).concat(METADATA_EXTENSION));
-        loadAllSktFiles(path, true,sketchName);
+        loadAllMtdFiles(path,true, sketchSerializer,sketchName.substring(0, index).concat(METADATA_EXTENSION));
+        loadAllSktFiles(path, true,sketchSerializer,sketchName);
         return existingSketch;
     }
 }

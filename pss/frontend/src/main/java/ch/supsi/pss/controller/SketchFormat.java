@@ -18,7 +18,6 @@ public class SketchFormat implements Initializable {
 
     @Override
     public void initialize(final URL url, final ResourceBundle resourceBundle) {
-
     }
 
     public void initData(final Stage stage, final Menu menu){

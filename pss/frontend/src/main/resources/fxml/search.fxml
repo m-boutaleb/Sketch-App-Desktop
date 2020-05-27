@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 
 
-<BorderPane prefHeight="100.0" stylesheets="/css/config.css" fx:controller="ch.supsi.pss.controller.Search" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="100.0" fx:controller="ch.supsi.pss.controller.Search" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
     <center>
         <HBox alignment="CENTER" prefHeight="124.0" prefWidth="455.0" spacing="10.0" BorderPane.alignment="CENTER">
             <Label text="%search.insert" styleClass="h3Bold"/>

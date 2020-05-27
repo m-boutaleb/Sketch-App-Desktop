@@ -3,6 +3,7 @@ package ch.supsi.pss.service;
 import ch.supsi.pss.model.Author;
 import ch.supsi.pss.model.Language;
 import ch.supsi.pss.model.Sketch;
+import ch.supsi.pss.model.Theme;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -14,7 +15,7 @@ public interface SketchService {
 
     boolean updateSketch(final byte[] newSketch, final Set<String> allTags, final Author author, final LocalDateTime time);
 
-    void updatePreferences(final String newPrefPathDir, final Language newPrefLanguage);
+    void updatePreferences(final String newPrefPathDir, final Language newPrefLanguage, final Theme newPrefTheme);
 
     boolean loadAllSketchData();
 
@@ -25,4 +26,6 @@ public interface SketchService {
     Sketch openSketch(String path, String sketchName);
 
     Set<Sketch> getAllSketches();
+
+    Theme getPrefTheme();
 }

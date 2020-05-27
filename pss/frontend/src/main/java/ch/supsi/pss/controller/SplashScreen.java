@@ -42,10 +42,10 @@ public class SplashScreen implements Initializable {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        PssFx.setDefaultIcon(stage);
                         Scene scene = new Scene(root);
                         stage.setTitle("Sketch App");
                         stage.setScene(scene);
+                        PssFx.setDefaultIconAndTheme(stage);
                         stage.setHeight(600);
                         stage.setWidth(800);
                         stage.show();

@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -23,6 +24,8 @@ import java.util.ResourceBundle;
 public class Menu implements Initializable {
     @FXML
     public BorderPane borderPane;
+    @FXML
+    public MenuItem saveOption;
     private Stage stage;
     private NewSketch newSketchController;
 
@@ -45,9 +48,8 @@ public class Menu implements Initializable {
         }
         loader.<SketchFormat>getController().initData(formatStage, this);
         formatStage.setScene(new Scene(sketchFormat));
-        formatStage.setTitle("Choose Sketch format");
         formatStage.initModality(Modality.APPLICATION_MODAL);
-        PssFx.setDefaultIcon(formatStage);
+        PssFx.setDefaultIconAndTheme(formatStage);
         formatStage.setResizable(false);
         formatStage.show();
     }
@@ -89,6 +91,7 @@ public class Menu implements Initializable {
     }
 
     public void initCanvas(final String text) {
+        saveOption.setDisable(false);
         var canvas=new NewSketch(text, stage);
         FXMLLoader loader=new FXMLLoader(getClass().getResource(ResourceBundlePss.getInstance().
                 getPssBundles().getString("fxml.newsketch")), ResourceBundlePss.getInstance().getLangBundles());
@@ -121,7 +124,7 @@ public class Menu implements Initializable {
         prefStage.setScene(new Scene(root));
         prefStage.initModality(Modality.APPLICATION_MODAL);
         prefStage.setResizable(false);
-        PssFx.setDefaultIcon(prefStage);
+        PssFx.setDefaultIconAndTheme(prefStage);
         prefStage.show();
     }
 
@@ -133,15 +136,15 @@ public class Menu implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        PssFx.setDefaultIcon(aboutStage);
         aboutStage.setScene(new Scene(root));
+        PssFx.setDefaultIconAndTheme(aboutStage);
         aboutStage.initModality(Modality.APPLICATION_MODAL);
         aboutStage.setResizable(false);
+        aboutStage.setTitle(ResourceBundlePss.getInstance().getLangBundles().getString("about.title"));
         aboutStage.show();
     }
 
     public void find(final ActionEvent actionEvent) {
-        checkIfAllSaved();
         final Stage findStage=new Stage();
         FXMLLoader loader=new FXMLLoader(getClass().
                 getResource(ResourceBundlePss.getInstance().getPssBundles().getString("fxml.search")), ResourceBundlePss.getInstance().getLangBundles());
@@ -151,11 +154,10 @@ public class Menu implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        PssFx.setDefaultIcon(findStage);
         findStage.setScene(new Scene(root));
+        PssFx.setDefaultIconAndTheme(findStage);
         findStage.initModality(Modality.APPLICATION_MODAL);
         findStage.setResizable(false);
-        findStage.setTitle(ResourceBundlePss.getInstance().getLangBundles().getString("search.title"));
         findStage.show();
     }
 
@@ -176,15 +178,18 @@ public class Menu implements Initializable {
             e.printStackTrace();
         }
         loader.<Tag>getController().initData(tagStage, newSketchController.getAllTags());
-        PssFx.setDefaultIcon(tagStage);
         tagStage.setScene(new Scene(root));
+        PssFx.setDefaultIconAndTheme(tagStage);
         tagStage.setResizable(false);
         tagStage.initModality(Modality.APPLICATION_MODAL);
-        tagStage.setTitle(ResourceBundlePss.getInstance().getLangBundles().getString("tag.title"));
         tagStage.show();
     }
 
     private boolean checkSketch() {
         return newSketchController != null;
+    }
+
+    public void save(final ActionEvent actionEvent) {
+        newSketchController.save(null);
     }
 }

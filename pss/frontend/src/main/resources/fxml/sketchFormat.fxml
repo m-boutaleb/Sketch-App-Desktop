@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.control.Button?>
-<BorderPane prefHeight="350.0" prefWidth="500.0" fx:controller="ch.supsi.pss.controller.SketchFormat" stylesheets="/css/config.css" styleClass="defaultBackground" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="350.0" prefWidth="500.0" fx:controller="ch.supsi.pss.controller.SketchFormat" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
     <center>
         <VBox alignment="CENTER" prefHeight="554.0" prefWidth="796.0" BorderPane.alignment="CENTER">
             <HBox prefHeight="554.0" prefWidth="796.0">
@@ -65,7 +65,7 @@
         </VBox>
     </center>
     <top>
-        <Label text="%sketch.format" styleClass="h2Bold" textFill="#545454" BorderPane.alignment="CENTER">
+        <Label text="%sketch.format" styleClass="h2Bold" BorderPane.alignment="CENTER">
             <BorderPane.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </BorderPane.margin>

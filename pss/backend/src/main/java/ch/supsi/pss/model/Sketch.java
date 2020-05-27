@@ -100,8 +100,8 @@ public class Sketch {
     }
 
     //ritorno sempre una copia dell'hashset in modo che all'esterno non me la modificano
-    public List<String> getAllTags() {
-        return new ArrayList<>(allTags);
+    public Set<String> getAllTags() {
+        return new HashSet<>(allTags);
     }
 
 

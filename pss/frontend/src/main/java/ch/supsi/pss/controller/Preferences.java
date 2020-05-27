@@ -2,6 +2,7 @@ package ch.supsi.pss.controller;
 
 import ch.supsi.pss.bundles.ResourceBundlePss;
 import ch.supsi.pss.model.Language;
+import ch.supsi.pss.model.Theme;
 import ch.supsi.pss.utils.DialogUtils;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -19,6 +20,8 @@ public class Preferences {
     private final Stage stage;
     @FXML
     ChoiceBox<Language> languageBox;
+    @FXML
+    ChoiceBox<Theme> themeBox;
     @FXML
     TextField saveLocation;
     @FXML
@@ -41,9 +44,11 @@ public class Preferences {
     public void initialize(){
         saveLocation.setText(SketchController.getInstance().getPrefPath());
         languageBox.getSelectionModel().select(SketchController.getInstance().getPrefLang());
+        themeBox.getSelectionModel().select(SketchController.getInstance().getPrefTheme());
         chooseLoadDir.setOnMouseClicked(this::chooseLoadDir);
         chooseSaveDir.setOnMouseClicked(this::chooseSaveDir);
         languageBox.getItems().addAll(Language.values());
+        themeBox.getItems().addAll(Theme.values());
         setPreferences.setOnMouseClicked(this::savePreferences);
         loadLocation.textProperty().addListener(i->saveToLoad.setDisable(loadLocation.getText().equals("")));
         saveToLoad.selectedProperty().addListener(i->saveLocation.setText(saveToLoad.isSelected()?loadLocation.getText():saveLocation.getText()));
@@ -56,13 +61,16 @@ public class Preferences {
 
     private void savePreferences(MouseEvent mouseEvent){
         var sketchController=SketchController.getInstance();
-        if(saveLocation ==null||languageBox ==null||saveLocation.getText() ==null||saveLocation.getText().equals("")||languageBox.getSelectionModel().getSelectedItem()==null){
+        if(saveLocation ==null||languageBox ==null||themeBox==null||saveLocation.getText() ==null
+                ||saveLocation.getText().equals("")||languageBox.getSelectionModel().getSelectedItem()==null
+        ||languageBox.getSelectionModel().getSelectedItem()==null){
             displayInputRequest();
             return;
         }
-        Language languageChosen=Language.fromStringToEnum(languageBox.getSelectionModel().getSelectedItem().toString());
+        Language languageChosen=Language.fromStringToLang(languageBox.getSelectionModel().getSelectedItem().toString());
+        Theme themeChosen=Theme.fromStringToTheme(themeBox.getSelectionModel().getSelectedItem().toString());
 
-        if(languageChosen!=SketchController.getInstance().getPrefLang()) {
+        if(languageChosen!=SketchController.getInstance().getPrefLang()||themeChosen!=SketchController.getInstance().getPrefTheme()) {
             var res=ResourceBundlePss.getInstance().getLangBundles();
             DialogUtils.displayAlert(res.getString("preferences.title"), res.getString("preferences.language.update.header"),
                     res.getString("preferences.language.update.context"));
@@ -71,7 +79,7 @@ public class Preferences {
         if(loadLocation!=null&&!loadLocation.getText().equals(""))
             sketchController.loadSketchData();
 
-        sketchController.updatePreferences(saveLocation.getText(),languageChosen);
+        sketchController.updatePreferences(saveLocation.getText(),languageChosen, themeChosen);
         this.stage.close();
     }
 

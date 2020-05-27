@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-import static ch.supsi.pss.utils.ClientUtils.*;
+import static ch.supsi.pss.utils.CanvasUtils.*;
 
 public class NewSketch {
     @FXML

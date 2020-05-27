@@ -1,8 +1,6 @@
 package ch.supsi.pss.service.implementation;
 
-import ch.supsi.pss.model.Author;
-import ch.supsi.pss.model.Language;
-import ch.supsi.pss.model.Sketch;
+import ch.supsi.pss.model.*;
 import ch.supsi.pss.repository.PreferencesRepository;
 import ch.supsi.pss.repository.SketchRepository;
 import ch.supsi.pss.service.JSONService;
@@ -16,11 +14,13 @@ public class SketchServiceImpl implements SketchService {
     private final SketchRepository sketchRepository;
     private final PreferencesRepository preferencesRepository;
     private final JSONService jsonService;
+    private final SketchSerializer sketchSerializer;
 
     private SketchServiceImpl() {
         this.sketchRepository = SketchRepository.getInstance();
         this.preferencesRepository = PreferencesRepository.getInstance();
         this.jsonService = JSONServiceImpl.getInstance();
+        this.sketchSerializer=new SketchSerializer();
     }
 
     public static SketchServiceImpl getInstance() {
@@ -46,14 +46,14 @@ public class SketchServiceImpl implements SketchService {
     }
 
     @Override
-    public void updatePreferences(final String newPrefPathDir, final Language newPrefLanguage) {
-        preferencesRepository.updatePreferences(newPrefPathDir, newPrefLanguage);
+    public void updatePreferences(final String newPrefPathDir, final Language newPrefLanguage, final Theme newPrefTheme) {
+        preferencesRepository.updatePreferences(newPrefPathDir, newPrefLanguage, newPrefTheme);
     }
 
 
     @Override
     public boolean loadAllSketchData() {
-        return sketchRepository.loadAllSketchData(preferencesRepository.getPrefPathDir());
+        return sketchRepository.loadAllSketchData(preferencesRepository.getPrefPathDir(),sketchSerializer);
     }
 
     @Override
@@ -68,11 +68,16 @@ public class SketchServiceImpl implements SketchService {
 
     @Override
     public Sketch openSketch(final String path, final String sketchName) {
-        return sketchRepository.openSketch(path, sketchName);
+        return sketchRepository.openSketch(path, sketchName, sketchSerializer);
     }
 
     @Override
     public Set<Sketch> getAllSketches() {
         return sketchRepository.getAllSketches();
+    }
+
+    @Override
+    public Theme getPrefTheme() {
+        return preferencesRepository.getPrefTheme();
     }
 }

@@ -11,6 +11,8 @@ import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.StageStyle;
 
+import java.util.Scanner;
+
 public class PssFx extends Application {
     @Override
     public void stop(){
@@ -18,6 +20,7 @@ public class PssFx extends Application {
     }
     @Override
     public void start(Stage stage) throws Exception {
+        authenticateUser();
         initializePssApp();
         Parent root = FXMLLoader.load(getClass().getResource(ResourceBundlePss.getInstance().getPssBundles().getString("fxml.splashscreen")));
         Scene scene = new Scene(root);
@@ -26,13 +29,22 @@ public class PssFx extends Application {
         stage.show();
     }
 
+    private void authenticateUser() {
+        Scanner scanner=new Scanner(System.in);
+        System.out.println("IMMETTI PASSWORD DI GRUPPO: ");
+        String inputUser;
+        while(!(inputUser=scanner.nextLine()).equals("POLLO VENDETTA")&&!(inputUser.equals("PV")));
+    }
+
     private void initializePssApp() {
         PssLogger.getInstance().initialize();
         loadAllFonts();
         PssLogger.getInstance().info("--------------------APPLICATION PSS STARTED--------------------", Pss.class);
     }
 
-    public static void setDefaultIcon(final Stage stage){
+    public static void setDefaultIconAndTheme(final Stage stage){
+        String propertyThemeToLoad = ResourceBundlePss.getInstance().getCurrentPropertyTheme();
+        stage.getScene().getStylesheets().add(propertyThemeToLoad);
         stage.getIcons().add(new Image(PssFx.class.getResourceAsStream(ResourceBundlePss.getInstance().getPssBundles().getString("img.icon"))));
     }
 

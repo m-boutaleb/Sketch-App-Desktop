@@ -1,9 +1,6 @@
 package ch.supsi.pss.controller;
 
-import ch.supsi.pss.model.Author;
-import ch.supsi.pss.model.Language;
-import ch.supsi.pss.model.PssLogger;
-import ch.supsi.pss.model.Sketch;
+import ch.supsi.pss.model.*;
 import ch.supsi.pss.service.*;
 import ch.supsi.pss.service.implementation.IdServiceImpl;
 import ch.supsi.pss.service.implementation.SketchServiceImpl;
@@ -23,8 +20,12 @@ public class SketchController {
         timeService= TimeServiceImpl.getInstance();
     }
 
-    public void updatePreferences(final String newPrefPathDir,final Language newPrefLanguage){
-        sketchService.updatePreferences(newPrefPathDir, newPrefLanguage);
+    public Theme getPrefTheme(){
+        return sketchService.getPrefTheme();
+    }
+
+    public void updatePreferences(final String newPrefPathDir,final Language newPrefLanguage, final Theme newPrefTheme){
+        sketchService.updatePreferences(newPrefPathDir, newPrefLanguage, newPrefTheme);
     }
 
     public Sketch openExistingSketch(final String path, final String sketchName){

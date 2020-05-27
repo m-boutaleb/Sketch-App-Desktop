@@ -9,11 +9,9 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-
-
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
-<BorderPane prefHeight="250.0" stylesheets="/css/config.css" prefWidth="370.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane minHeight="150.0" maxHeight="370" prefWidth="370.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
     <top>
         <HBox alignment="CENTER" prefHeight="51.0" prefWidth="376.0" BorderPane.alignment="CENTER">
             <Label text="%preferences.title" styleClass="h2Bold"/>
@@ -27,7 +25,7 @@
                         <Insets left="10.0"/>
                     </HBox.margin>
                 </Label>
-                <TextField prefHeight="40.0" prefWidth="200.0" promptText="Path" fx:id="saveLocation"/>
+                <TextField prefHeight="35.0" prefWidth="200.0" promptText="Path" fx:id="saveLocation"/>
                 <Button fx:id="chooseSaveDir">
                     <HBox.margin>
                         <Insets right="1.0"/>
@@ -45,7 +43,7 @@
                         <Insets left="10.0"/>
                     </HBox.margin>
                 </Label>
-                <TextField prefHeight="40.0" prefWidth="200.0" promptText="Path" fx:id="loadLocation">
+                <TextField prefHeight="35.0" prefWidth="200.0" promptText="Path" fx:id="loadLocation">
                 </TextField>
                 <Button fx:id="chooseLoadDir">
                     <HBox.margin>
@@ -64,8 +62,15 @@
                         <Insets left="10.0"/>
                     </HBox.margin>
                 </Label>
-                <ChoiceBox prefHeight="40.0" fx:id="languageBox" prefWidth="250.0" styleClass="choice-box">
-                </ChoiceBox>
+                <ChoiceBox prefHeight="35.0" fx:id="languageBox" prefWidth="250.0" styleClass="choice-box"/>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                <Label mnemonicParsing="true" text="%preferences.theme" prefWidth="80" styleClass="h3">
+                    <HBox.margin>
+                        <Insets left="10.0"/>
+                    </HBox.margin>
+                </Label>
+                <ChoiceBox prefHeight="35.0" fx:id="themeBox" prefWidth="250.0" styleClass="choice-box"/>
             </HBox>
         </VBox>
     </center>

@@ -19,7 +19,7 @@ public class DialogUtils {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle(titleMessage);
             alert.setHeaderText(headerMessage);
-            PssFx.setDefaultIcon((Stage) alert.getDialogPane().getScene().getWindow());
+            PssFx.setDefaultIconAndTheme((Stage) alert.getDialogPane().getScene().getWindow());
             alert.setContentText(contextMessage);
             alert.showAndWait();
     }
@@ -40,7 +40,7 @@ public class DialogUtils {
         alert.setTitle(titleMessage);
         alert.setHeaderText(headerMessage);
         alert.initOwner(stage.getOwner());
-        PssFx.setDefaultIcon((Stage) alert.getDialogPane().getScene().getWindow());
+        PssFx.setDefaultIconAndTheme((Stage) alert.getDialogPane().getScene().getWindow());
         alert.setContentText(contextMessage);
         Optional<ButtonType> res = alert.showAndWait();
         if(res.isPresent()) {

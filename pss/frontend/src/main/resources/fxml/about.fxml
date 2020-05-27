@@ -6,32 +6,27 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane maxHeight="250.0" fx:controller="ch.supsi.pss.controller.About" stylesheets="/css/config.css" prefWidth="450.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<?import javafx.scene.layout.VBox?>
+<BorderPane maxHeight="250.0" fx:controller="ch.supsi.pss.controller.About" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
     <center>
-        <AnchorPane prefHeight="247.0" prefWidth="474.0">
-            <Label fx:id="h2Version" layoutX="64.0" prefHeight="25.0" styleClass="h2Bold"
-                   text="%application.name" AnchorPane.leftAnchor="140.0"/>
-            <Label layoutX="73.0" layoutY="20.0" text="%application.build" fx:id="build" AnchorPane.leftAnchor="140.0"/>
-            <Label layoutX="70.0" layoutY="45.0" prefHeight="25.0" styleClass="h2Bold"
-                   text="%about.developers" AnchorPane.leftAnchor="140.0"/>
-            <Label layoutX="64.0" layoutY="60.0" styleClass="h3Bold" prefHeight="25.0" text="%developers.name.mohamed.boutaleb"
-                   AnchorPane.leftAnchor="140.0"/>
-            <Label layoutY="75.0" styleClass="h3" prefHeight="25.0" text="%developers.mail.mohamed.boutaleb"
-                   AnchorPane.leftAnchor="140.0"/>
-            <Label layoutX="82.0" layoutY="90.0" styleClass="h3Bold" prefHeight="25.0" text="%developers.name.michel.rosselli"
-                   AnchorPane.leftAnchor="140.0"/>
-            <Label layoutX="20.0" layoutY="105.0" styleClass="h3" prefHeight="25.0" text="%developers.mail.michel.rosselli"
-                   AnchorPane.leftAnchor="140.0"/>
-            <Label layoutX="79.0" layoutY="120.0" styleClass="h3Bold" prefHeight="25.0" text="%developers.name.nicolas.gregori"
-                   AnchorPane.leftAnchor="140.0"/>
-            <Label layoutX="18.0" layoutY="135.0" styleClass="h3" prefHeight="25.0" text="%developers.mail.nicolas.gregori"
-                   AnchorPane.leftAnchor="140.0"/>
-        </AnchorPane>
+        <HBox styleClass="whiteBackground" BorderPane.alignment="CENTER" alignment="CENTER">
+        <VBox alignment="CENTER" minWidth="200" maxWidth="400" BorderPane.alignment="CENTER">
+            <HBox.margin>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+            </HBox.margin>
+        <Label fx:id="h2Version" minWidth="200" maxWidth="400" alignment="BASELINE_LEFT" styleClass="h2Bold"
+               text="%application.name"/>
+        <Label text="%application.build" fx:id="build" minWidth="300" maxWidth="400" alignment="BASELINE_LEFT"/>
+        <Label styleClass="h2Bold" minWidth="200" maxWidth="400" alignment="BASELINE_LEFT" text="%about.developers"/>
+        <Label styleClass="h3Bold" minWidth="200" maxWidth="400" alignment="BASELINE_LEFT" text="%developers.info.mohamed.boutaleb"/>
+        <Label styleClass="h3Bold" minWidth="200" maxWidth="400" alignment="BASELINE_LEFT" text="%developers.info.michel.rosselli"/>
+        <Label styleClass="h3Bold" minWidth="200" maxWidth="400" alignment="BASELINE_LEFT" text="%developers.info.nicolas.gregori"/>
+        </VBox>
+        </HBox>
     </center>
     <top>
-        <HBox alignment="CENTER_LEFT" prefHeight="100.0" styleClass="defaultBackground"
+        <HBox alignment="CENTER" prefHeight="100.0" styleClass="defaultBackground"
               BorderPane.alignment="CENTER_LEFT">
             <ImageView fitHeight="124.0" fitWidth="141.0" pickOnBounds="true" preserveRatio="true">
                 <HBox.margin>
