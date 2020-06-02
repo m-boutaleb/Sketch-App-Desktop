@@ -34,26 +34,19 @@ public class SketchServiceImpl implements SketchService {
         final Sketch newSketch=new Sketch(sketchImage,uuid,author, timeCreation ,allTags);
         final String prefDir=getPrefPath();
         return sketchRepository.saveSketchImage(sketchImage, prefDir, uuid.toString()) &&
-                sketchRepository.saveSketchMetadata(jsonService.fromSketchToJSON(newSketch), prefDir, uuid.toString())&&
-                sketchRepository.addSketchToRepo(newSketch);
+                sketchRepository.saveSketchMetadata(jsonService.fromSketchToJSON(newSketch), prefDir, uuid.toString());
     }
 
     @Override
     public boolean updateSketch(final byte[] newSketchImage, final Set<String> allTags, final Author author, final LocalDateTime time) {
-        final Sketch newSketch=new Sketch(sketchRepository.getLastSavedSketchUUID(), newSketchImage, allTags, author, time);
-        sketchRepository.removeSketchFromRepo(newSketch);
+        final Sketch newSketch=new Sketch(sketchRepository.getLastSavedSketchUUID(
+                getAllSketches()), newSketchImage, allTags, author, time);
         return saveSketch(newSketch.getUUID(),newSketchImage, allTags, author, time);
     }
 
     @Override
     public void updatePreferences(final String newPrefPathDir, final Language newPrefLanguage, final Theme newPrefTheme) {
         preferencesRepository.updatePreferences(newPrefPathDir, newPrefLanguage, newPrefTheme);
-    }
-
-
-    @Override
-    public boolean loadAllSketchData() {
-        return sketchRepository.loadAllSketchData(preferencesRepository.getPrefPathDir(),sketchSerializer);
     }
 
     @Override
@@ -73,7 +66,7 @@ public class SketchServiceImpl implements SketchService {
 
     @Override
     public Set<Sketch> getAllSketches() {
-        return sketchRepository.getAllSketches();
+        return sketchRepository.getAllSketches(preferencesRepository.getPrefPathDir(), sketchSerializer);
     }
 
     @Override

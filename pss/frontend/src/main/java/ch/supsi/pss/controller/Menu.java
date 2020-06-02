@@ -11,10 +11,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.RadioButton;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,8 +48,13 @@ public class Menu implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        loader.<SketchFormat>getController().initData(formatStage, this);
         formatStage.setScene(new Scene(sketchFormat));
+        loader.<SketchFormat>getController().initData(formatStage);
+
+        formatStage.setOnCloseRequest(e->initCanvas(
+                ((RadioButton)loader.<SketchFormat>getController().format.getSelectedToggle())
+                        .getText()));
+
         formatStage.initModality(Modality.APPLICATION_MODAL);
         PssFx.setDefaultIconAndTheme(formatStage);
         formatStage.setResizable(false);
@@ -162,15 +169,15 @@ public class Menu implements Initializable {
     }
 
     public void tag(final ActionEvent actionEvent) {
+        var res=ResourceBundlePss.getInstance().getLangBundles();
         if(!checkSketch()) {
-            var res=ResourceBundlePss.getInstance().getLangBundles();
             DialogUtils.displayAlert(res.getString("tag.title"),
                     res.getString("tag.error.header")  , res.getString("tag.error.context"));
             return;
         }
         final Stage tagStage=new Stage();
         FXMLLoader loader=new FXMLLoader(getClass().
-                getResource(ResourceBundlePss.getInstance().getPssBundles().getString("fxml.tag")), ResourceBundlePss.getInstance().getLangBundles());
+                getResource(ResourceBundlePss.getInstance().getPssBundles().getString("fxml.tag")),res);
         Parent root=null;
         try {
             root=loader.load();

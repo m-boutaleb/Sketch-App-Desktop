@@ -1,7 +1,6 @@
 package ch.supsi.pss.repository;
 
 import ch.supsi.pss.model.*;
-import ch.supsi.pss.service.JSONService;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -17,11 +16,8 @@ import static ch.supsi.pss.utils.FileUtils.SKETCH_EXTENSION;
 
 public class SketchRepository {
     private static SketchRepository instance;
-    private final Set<Sketch> allSketches;
-    private Sketch existingSketch;
 
     private SketchRepository(){
-        this.allSketches=new HashSet<>();
     }
 
     public static SketchRepository getInstance() {
@@ -30,48 +26,40 @@ public class SketchRepository {
         return instance;
     }
 
-    public Set<Sketch> getAllSketches() {
-        return new HashSet<>(allSketches);
+    public Set<Sketch> getAllSketches(final String prefPathDir, final SketchSerializer sketchSerializer) {
+        final Set<Sketch> allLoadedSketch=new HashSet<>();
+        loadAllSketchData(prefPathDir ,sketchSerializer, allLoadedSketch);
+        return allLoadedSketch;
     }
 
-    public Sketch findSketchByUUID(final UUID uuidToFind){
+    public Sketch findSketchByUUID(final UUID uuidToFind ,final Set<Sketch> allSketches){
         final Predicate<Sketch> sameUUID=u->u.getUUID().equals(uuidToFind);
         return allSketches.stream().filter(sameUUID::test).findFirst().orElse(null);
     }
 
-    public boolean addSketchToRepo(final Sketch sketchToAdd){
-        return allSketches.add(sketchToAdd);
-    }
-
-    public boolean removeSketchFromRepo(final Sketch newSketchUpdated){
-        return allSketches.remove(findSketchByUUID(newSketchUpdated.getUUID()));
-    }
-
-
-
-    private void loadAllSktFiles(final String prefPathDir,boolean existingSketch,final SketchSerializer sketchSerializer,  final String... sktFiles) {
+    private void loadAllSktFiles(final String prefPathDir, final Sketch existingSketch, final SketchSerializer sketchSerializer, final Set<Sketch> allSketches, final String... sktFiles) {
         for(final var uuid: sktFiles)
             try (final FileInputStream inputStream= new FileInputStream(prefPathDir+File.separator+uuid)) {
                 byte[] image=inputStream.readAllBytes();
-                if(existingSketch){
-                    this.existingSketch.setImage(image);
+                if(existingSketch!=null){
+                    existingSketch.setImage(image);
                     return;
                 }
-                findSketchByUUID(UUID.fromString(uuid.replace(".skt", ""))).setImage(image);
+                findSketchByUUID(UUID.fromString(uuid.replace(".skt", "")), allSketches).setImage(image);
             } catch (IOException e) {
                 PssLogger.getInstance().error("ERROR WHILE READING IMAGE FILE...", getClass());
             }
     }
 
-    private void loadAllMtdFiles(final String prefPathDir,boolean existingSketch,final SketchSerializer sketchSerializer , final String... mtdFiles) {
+    private void loadAllMtdFiles(final String prefPathDir,Sketch existingSketch, final SketchSerializer sketchSerializer, final Set<Sketch> allSketches, final String... mtdFiles) {
         for(final var uuid: mtdFiles){
             try (FileReader reader = new FileReader(prefPathDir+File.separator+uuid)) {
                 final Sketch sketch=sketchSerializer.createSketchByJSON((JSONObject) new JSONParser().parse(reader));
-                if(existingSketch){
-                    this.existingSketch=sketch;
+                if(existingSketch!=null){
+                    existingSketch.copyOf(sketch);
                     return;
                 }
-                addSketchToRepo(sketch);
+                allSketches.add(sketch);
             } catch (IOException e) {
                 PssLogger.getInstance().error("ERROR WHILE READING JSON FILE...", getClass());
             } catch (ParseException e) {
@@ -80,7 +68,7 @@ public class SketchRepository {
         }
     }
 
-    public boolean loadAllSketchData(final String prefPathDir, final SketchSerializer sketchSerializer){
+    public boolean loadAllSketchData(final String prefPathDir, final SketchSerializer sketchSerializer,final Set<Sketch> allSketches){
         PssLogger.getInstance().info("READING ALL DATA...", getClass());
         final GenericExtensionFilter filterBySketch= new GenericExtensionFilter(SKETCH_EXTENSION);
         final GenericExtensionFilter filterByMetadata= new GenericExtensionFilter(METADATA_EXTENSION);
@@ -101,8 +89,8 @@ public class SketchRepository {
         }else if(mtdFiles.length!=sktFiles.length)
             PssLogger.getInstance().error("THERE ARE SOME SKETCHES/METADATA WITH NO METADATA/SKETCHES INFO", getClass());
 
-        loadAllMtdFiles(prefPathDir,false,sketchSerializer,mtdFiles);
-        loadAllSktFiles(prefPathDir,false,sketchSerializer,sktFiles);
+        loadAllMtdFiles(prefPathDir,null,sketchSerializer, allSketches,mtdFiles);
+        loadAllSktFiles(prefPathDir,null,sketchSerializer, allSketches,sktFiles);
         PssLogger.getInstance().info("ALL SKETCHES LOADED WITH SUCCESS", getClass());
         return true;
     }
@@ -136,17 +124,19 @@ public class SketchRepository {
         return false;
     }
 
-    public UUID getLastSavedSketchUUID() {
-        var copy=new ArrayList<>(allSketches);
+    public UUID getLastSavedSketchUUID(final Set<Sketch> allSketches) {
+        final var copy=new ArrayList<>(allSketches);
         Collections.sort(copy, new SketchDateComparator());
         System.out.println(copy.get(0).getUUID());
         return copy.get(0).getUUID();
     }
 
     public Sketch openSketch(final String path, final String sketchName, final SketchSerializer sketchSerializer) {
+        Sketch existingSketch=new Sketch();
         var index= sketchName.lastIndexOf(".");
-        loadAllMtdFiles(path,true, sketchSerializer,sketchName.substring(0, index).concat(METADATA_EXTENSION));
-        loadAllSktFiles(path, true,sketchSerializer,sketchName);
+        loadAllMtdFiles(path,existingSketch, sketchSerializer, null, sketchName.substring(0, index).concat(METADATA_EXTENSION));
+        System.out.println(existingSketch);
+        loadAllSktFiles(path, existingSketch,sketchSerializer, null, sketchName);
         return existingSketch;
     }
 }

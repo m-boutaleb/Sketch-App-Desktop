@@ -33,13 +33,20 @@ public class Sketch {
     }
 
     private String formatAllTags(){
-
+        if(allTags==null)
+            return null;
         StringBuilder tags = new StringBuilder();
 
         for(String s: allTags)
             tags.append(s + "\n");
 
         return tags.toString();
+    }
+
+    /**
+     * Attenzione costruttore da usare solo per avere un istanza della classe Sketch
+     */
+    public Sketch(){
     }
 
     /**
@@ -54,8 +61,6 @@ public class Sketch {
         if(author ==null||oldSketchUUID==null||allTags==null)
             PssLogger.getInstance().error(new IllegalArgumentException("AUTHOR/UUID/TAGS/IMAGE CANNOT BE NULL"), this.getClass());
         UUID = oldSketchUUID;
-        allTags.remove(SketchRepository.getInstance().findSketchByUUID(oldSketchUUID).time.toString());
-        allTags.remove(SketchRepository.getInstance().findSketchByUUID(oldSketchUUID).author.toString());
         this.time =time;
         this.author = author;
         this.image=newSketch;
@@ -118,11 +123,32 @@ public class Sketch {
     }
 
     @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final Sketch sketch = (Sketch) o;
+        return UUID.equals(sketch.UUID);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(UUID);
+    }
+
+    @Override
     public String  toString(){
 
         return "\nUIID: " + UUID +
                  "\nAuthor: " + author +
                  "\nTime creation: " + time
                   + "\nTags: " + formatAllTags();
+    }
+
+    public void copyOf(final Sketch sketch) {
+        this.allTags=sketch.allTags;
+        this.time=sketch.time;
+        this.author=sketch.author;
+        this.image=sketch.image;
+        this.UUID=sketch.UUID;
     }
 }

@@ -1,9 +1,6 @@
 package ch.supsi.pss.service;
 
-import ch.supsi.pss.model.Author;
-import ch.supsi.pss.model.Language;
-import ch.supsi.pss.model.Sketch;
-import ch.supsi.pss.model.Theme;
+import ch.supsi.pss.model.*;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -17,13 +14,11 @@ public interface SketchService {
 
     void updatePreferences(final String newPrefPathDir, final Language newPrefLanguage, final Theme newPrefTheme);
 
-    boolean loadAllSketchData();
-
     String getPrefPath();
 
     Language getPrefLang();
 
-    Sketch openSketch(String path, String sketchName);
+    Sketch openSketch(final String path,final String sketchName);
 
     Set<Sketch> getAllSketches();
 

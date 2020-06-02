@@ -21,13 +21,10 @@ public class Author {
     @Override
     public boolean equals(Object obj){
         if(this == obj) return true;
-
         if(obj != null ){
             Author u = (Author) obj;
-
             return username.equals(u.username);
         }
-        else
-            return false;
+        return false;
     }
 }

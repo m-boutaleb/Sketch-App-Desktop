@@ -6,6 +6,8 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,15 +16,13 @@ public class SketchFormat implements Initializable {
     @FXML
     ToggleGroup format;
     private Stage stage;
-    private Menu menu;
 
     @Override
     public void initialize(final URL url, final ResourceBundle resourceBundle) {
     }
 
-    public void initData(final Stage stage, final Menu menu){
+    public void initData(final Stage stage){
         this.stage=stage;
-        this.menu=menu;
     }
 
     @FXML
@@ -32,7 +32,7 @@ public class SketchFormat implements Initializable {
 
     @FXML
     public void createSketch(final MouseEvent mouseEvent) {
-        stage.close();
-        menu.initCanvas(((RadioButton)format.getSelectedToggle()).getText());
+        Window window = stage.getScene().getWindow();
+        window.fireEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
     }
 }

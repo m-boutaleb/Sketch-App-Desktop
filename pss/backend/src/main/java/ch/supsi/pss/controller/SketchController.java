@@ -50,10 +50,6 @@ public class SketchController {
         return sketchService.getAllSketches();
     }
 
-    public void loadSketchData() {
-        sketchService.loadAllSketchData();
-    }
-
     public void newSketch(final byte[] sketch, final Set<String> allTags, final Author author){
         if(author==null||sketch==null||allTags==null)
             PssLogger.getInstance().error(new IllegalArgumentException("SKETCH IMAGE/TAGS/AUTHOR CANNOT BE NULL"),this.getClass());

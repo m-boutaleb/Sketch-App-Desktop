@@ -72,3 +72,7 @@
     -fx-background-color:-fx-lighter-theme-color ;
     -fx-text-fill: grey;
 }
+.buttonImage{
+    -fx-background-color: -fx-default-button;
+    -fx-cursor: hand;
+}

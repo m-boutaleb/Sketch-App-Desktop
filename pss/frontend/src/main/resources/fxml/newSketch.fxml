@@ -14,7 +14,7 @@
     </center>
     <top>
         <HBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
-            <Button text="%newsketch.save" styleClass="defaultButton" fx:id="save">
+            <Button text="%newsketch.save" styleClass="defaultButton, buttonImage" fx:id="save" >
                 <graphic>
                     <ImageView fitWidth="20" fitHeight="20">
                         <Image url="@../img/icons/save.png"/>
@@ -24,7 +24,7 @@
                     <Insets left="5.0" bottom="5.0" top="5.0" right="5.0"/>
                 </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" styleClass="defaultButton" text="%newsketch.draw" fx:id="draw">
+            <Button mnemonicParsing="false" styleClass="defaultButton, buttonImage" text="%newsketch.draw" fx:id="draw">
                 <graphic>
                     <ImageView fitWidth="20" fitHeight="20">
                         <Image url="@../img/icons/pencil.png"/>
@@ -34,9 +34,9 @@
                     <Insets left="5.0" bottom="5.0" top="5.0" right="5.0"/>
                 </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" styleClass="defaultButton" text="%newsketch.erase" fx:id="erase">
+            <Button mnemonicParsing="false" styleClass="defaultButton, buttonImage" text="%newsketch.erase" fx:id="erase">
                 <graphic>
-                    <ImageView fitWidth="20" fitHeight="20">
+                    <ImageView fitWidth="20" fitHeight="20" styleClass="buttonImage">
                         <Image url="@../img/icons/erase.png"/>
                     </ImageView>
                 </graphic>

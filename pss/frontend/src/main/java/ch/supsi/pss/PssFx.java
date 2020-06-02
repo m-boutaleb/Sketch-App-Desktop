@@ -19,7 +19,7 @@ public class PssFx extends Application {
         PssLogger.getInstance().info("--------------------APPLICATION PSS FINISHED--------------------", getClass());
     }
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(final Stage stage) throws Exception {
         authenticateUser();
         initializePssApp();
         Parent root = FXMLLoader.load(getClass().getResource(ResourceBundlePss.getInstance().getPssBundles().getString("fxml.splashscreen")));

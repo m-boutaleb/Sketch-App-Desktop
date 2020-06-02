@@ -10,7 +10,7 @@ public class ResourceBundlePss {
     private final String currentPropertyTheme;
     private static ResourceBundlePss instance;
     private final ResourceBundle langBundles;
-    private final ResourceBundle pssBundles=ResourceBundle.getBundle("pss");
+    private final ResourceBundle pssBundles;
 
     public String getCurrentPropertyTheme() {
         return currentPropertyTheme;
@@ -25,7 +25,8 @@ public class ResourceBundlePss {
     }
 
     private ResourceBundlePss(){
-        var skethController=SketchController.getInstance();
+        pssBundles=ResourceBundle.getBundle("pss");
+        final SketchController skethController=SketchController.getInstance();
         Theme theme=skethController.getPrefTheme();
         switch((theme=((theme==null)?Theme.DEFAULTTHEME:theme))){
             case DEFAULTTHEME:
@@ -34,7 +35,7 @@ public class ResourceBundlePss {
             default:
                 currentPropertyTheme=getPssBundles().getString("theme.dark");
         }
-        Language language=SketchController.getInstance().getPrefLang();
+        final Language language=SketchController.getInstance().getPrefLang();
         if(language==null){
             langBundles =ResourceBundle.getBundle("pss_ita");
             return;

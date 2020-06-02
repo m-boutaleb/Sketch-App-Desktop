@@ -7,7 +7,6 @@ import ch.supsi.pss.utils.DialogUtils;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -25,11 +24,7 @@ public class Preferences {
     @FXML
     TextField saveLocation;
     @FXML
-    TextField loadLocation;
-    @FXML
     Button setPreferences;
-    @FXML
-    CheckBox saveToLoad;
     @FXML
     Button chooseLoadDir;
     @FXML
@@ -42,16 +37,14 @@ public class Preferences {
 
     @FXML
     public void initialize(){
-        saveLocation.setText(SketchController.getInstance().getPrefPath());
-        languageBox.getSelectionModel().select(SketchController.getInstance().getPrefLang());
-        themeBox.getSelectionModel().select(SketchController.getInstance().getPrefTheme());
-        chooseLoadDir.setOnMouseClicked(this::chooseLoadDir);
+        final SketchController controller=SketchController.getInstance();
+        saveLocation.setText(controller.getPrefPath());
+        languageBox.getSelectionModel().select(controller.getPrefLang());
+        themeBox.getSelectionModel().select(controller.getPrefTheme());
         chooseSaveDir.setOnMouseClicked(this::chooseSaveDir);
         languageBox.getItems().addAll(Language.values());
         themeBox.getItems().addAll(Theme.values());
         setPreferences.setOnMouseClicked(this::savePreferences);
-        loadLocation.textProperty().addListener(i->saveToLoad.setDisable(loadLocation.getText().equals("")));
-        saveToLoad.selectedProperty().addListener(i->saveLocation.setText(saveToLoad.isSelected()?loadLocation.getText():saveLocation.getText()));
     }
 
     private void displayInputRequest(){
@@ -60,7 +53,7 @@ public class Preferences {
     }
 
     private void savePreferences(MouseEvent mouseEvent){
-        var sketchController=SketchController.getInstance();
+        final SketchController sketchController=SketchController.getInstance();
         if(saveLocation ==null||languageBox ==null||themeBox==null||saveLocation.getText() ==null
                 ||saveLocation.getText().equals("")||languageBox.getSelectionModel().getSelectedItem()==null
         ||languageBox.getSelectionModel().getSelectedItem()==null){
@@ -76,19 +69,10 @@ public class Preferences {
                     res.getString("preferences.language.update.context"));
         }
 
-        if(loadLocation!=null&&!loadLocation.getText().equals(""))
-            sketchController.loadSketchData();
-
         sketchController.updatePreferences(saveLocation.getText(),languageChosen, themeChosen);
         this.stage.close();
     }
 
-    private void chooseLoadDir(MouseEvent mouseEvent){
-        DirectoryChooser loadLocationDir=new DirectoryChooser();
-        File file=loadLocationDir.showDialog(new Stage());
-        if(loadLocation!=null&&file!=null)
-            loadLocation.setText(file.getAbsolutePath());
-    }
     private void chooseSaveDir(MouseEvent mouseEvent){
         DirectoryChooser loadLocationDir=new DirectoryChooser();
         File file=loadLocationDir.showDialog(new Stage());
