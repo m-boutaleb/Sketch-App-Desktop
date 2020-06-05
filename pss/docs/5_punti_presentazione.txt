@@ -1,5 +1,6 @@
-1. Contesto motivazione per cui faccciamo il lavoro perche lo stiamo facendo e perche ci stiamo muovendo
+1.contesto motivazione per cui faccciamo il lavoro 
+perche lo stiamo facendo e perche ci stiamo muovendo
 2. Quale problema dobbiamo risolvere(mitigare la noia durante le lezioni, approcio alla risoluzione del problema)
-3. Architettura e problemi affrontati
-4. Risultati ottenuti e soluzione del design
+3. Archtettura e problemi affrontati
+4. risultati ottenuti e soluzione del design
 5. Conclusioni (stante i problemi avuti e quelli ottenuti quali sono le conclusioni)
