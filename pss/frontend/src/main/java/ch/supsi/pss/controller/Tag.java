@@ -26,7 +26,7 @@ public class Tag implements Initializable {
     public void initData(final Stage tagStage, final Set<String> allTags) {
         this.stage=tagStage;
         this.allTags=allTags;
-        allTags.stream().map(Button::new).forEach(allTagsPane.getChildren()::addAll);
+        allTags.parallelStream().map(Button::new).forEach(allTagsPane.getChildren()::addAll);
     }
 
     public void saveAndClose(final ActionEvent actionEvent) {
