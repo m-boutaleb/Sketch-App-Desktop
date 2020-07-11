@@ -14,7 +14,7 @@ Sketch app is a crossplatform application developed with JavaFX that allows you 
 The aim of this project is to mitigate boredom and to be able to make drawings to represent a concept with graphs. Moreover, new features have been added, such as inserting metadata to each sketch in order to search for them. The application also allows you to change the theme through preferences. This software has been designed to be evaluated as a software engineering course project.
 
 ## Screenshots
-![Add Tag]!(.img/add-tag.png)
+![Add Tag](.img/add-tag.png)
 
 ## Technologies
 The technologies used for the development of this software are as follows:
