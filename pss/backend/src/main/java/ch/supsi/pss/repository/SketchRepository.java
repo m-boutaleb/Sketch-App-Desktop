@@ -68,7 +68,7 @@ public class SketchRepository {
         }
     }
 
-    public boolean loadAllSketchData(final String prefPathDir, final SketchSerializer sketchSerializer,final Set<Sketch> allSketches){
+    private boolean loadAllSketchData(final String prefPathDir, final SketchSerializer sketchSerializer,final Set<Sketch> allSketches){
         PssLogger.getInstance().info("READING ALL DATA...", getClass());
         final GenericExtensionFilter filterBySketch= new GenericExtensionFilter(SKETCH_EXTENSION);
         final GenericExtensionFilter filterByMetadata= new GenericExtensionFilter(METADATA_EXTENSION);
@@ -79,10 +79,10 @@ public class SketchRepository {
             PssLogger.getInstance().error("DIRECTORY " + prefPathDir + " DOES NOT EXISTS...", getClass());
             return false;
         }
-        //lista tutte i nomi dei file .mtd
-        String sktFiles[]=dir.list(filterBySketch);
         //lista tutte i nomi dei file .skt
-        String mtdFiles[]=dir.list(filterByMetadata);
+        final String sktFiles[]=dir.list(filterBySketch);
+        //lista tutte i nomi dei file .mtd
+        final String mtdFiles[]=dir.list(filterByMetadata);
         if(mtdFiles.length==0 && sktFiles.length==0) {
             PssLogger.getInstance().warn("NO FILES FOUND", getClass());
             return true;
@@ -127,7 +127,6 @@ public class SketchRepository {
     public UUID getLastSavedSketchUUID(final Set<Sketch> allSketches) {
         final var copy=new ArrayList<>(allSketches);
         Collections.sort(copy, new SketchDateComparator());
-        System.out.println(copy.get(0).getUUID());
         return copy.get(0).getUUID();
     }
 
@@ -135,7 +134,6 @@ public class SketchRepository {
         Sketch existingSketch=new Sketch();
         var index= sketchName.lastIndexOf(".");
         loadAllMtdFiles(path,existingSketch, sketchSerializer, null, sketchName.substring(0, index).concat(METADATA_EXTENSION));
-        System.out.println(existingSketch);
         loadAllSktFiles(path, existingSketch,sketchSerializer, null, sketchName);
         return existingSketch;
     }

@@ -3,6 +3,7 @@ package ch.supsi.pss.controller;
 import ch.supsi.pss.PssFx;
 import ch.supsi.pss.bundles.ResourceBundlePss;
 import ch.supsi.pss.model.Sketch;
+import ch.supsi.pss.model.SketchSerializer;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane;
@@ -25,26 +26,26 @@ public class SketchViewer {
         return new ImageView(new Image(new ByteArrayInputStream(image)));
     }
 
-    public void getAndShowTableView(final Sketch... sketch){
+    public void getAndShowTableView(final Stage owner, final Sketch... sketches){
         stage=new Stage();
-        TableView<SketchRow> resultTable = getTableView(sketch);
+        TableView<SketchRow> resultTable = getTableView(sketches);
         stage.setTitle(ResourceBundlePss.getInstance().getLangBundles().getString("sketch.show"));
         final ScrollPane pane= new ScrollPane(resultTable);
         pane.setFitToWidth(true);
         pane.setFitToHeight(true);
         stage.setScene(new Scene(pane));
-        PssFx.setDefaultIconAndTheme(stage);
+        PssFx.setDefaultIconAndThemeAndOwner(stage, owner);
         stage.show();
     }
 
     private TableView<SketchRow> getTableView(final Sketch... results){
-        var allTagsTextArea=Arrays.stream(results).map(i->new TextArea( i.getAllTags().stream().reduce("", (s1, s2)->s1.concat("\n").concat(s2)))).collect(Collectors.toList());
+        final var allTagsTextArea=Arrays.stream(results).map(s->new TextArea(SketchSerializer.formatAllTags(s))).parallel().collect(Collectors.toList());
         allTagsTextArea.forEach(ta->ta.setEditable(false));
 
-        var allRows= IntStream.range(0, results.length).filter(i->results[i]!=null).mapToObj(i->new SketchRow(parseImage(results[i].getImage()),
+        final var allRows= IntStream.range(0, results.length).filter(i->results[i]!=null).mapToObj(i->new SketchRow(parseImage(results[i].getImage()),
                new ScrollPane(allTagsTextArea.get(i)))).collect(Collectors.toSet());
 
-        var langRes=ResourceBundlePss.getInstance().getLangBundles();
+        final var langRes=ResourceBundlePss.getInstance().getLangBundles();
 
         TableView<SketchRow> resultTable = new TableView();
         TableColumn<SketchRow, ImageView> thumbColumn = new TableColumn(langRes.getString("tableview.column.sketch.image"));
@@ -53,20 +54,11 @@ public class SketchViewer {
         thumbColumn.setCellValueFactory(new PropertyValueFactory<>("sketchImage"));
         tagsColumn.setCellValueFactory(new PropertyValueFactory<>("sketchTags"));
 
-        resultTable.getColumns().add(thumbColumn);
-        resultTable.getColumns().add(tagsColumn);
+        resultTable.getColumns().addAll(thumbColumn, tagsColumn);
 
         allRows.forEach(resultTable.getItems()::add);
 
-        resultTable.setOnMousePressed(event->{
-                if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-                    var sketchImage=new ImageView(resultTable.getSelectionModel().getSelectedItem().getSketchImage().getImage());
-                    var sketchStage=new Stage();
-                    sketchStage.setScene(new Scene(new BorderPane(sketchImage) ,sketchImage.getImage().getWidth(), sketchImage.getImage().getHeight()));
-                    PssFx.setDefaultIconAndTheme(sketchStage);
-                    sketchStage.show();
-                }
-        });
+        showImageOnDoubleClick(resultTable);
 
         stage.widthProperty().addListener(i->{
             resultTable.getItems().stream().forEach(this::setImageWidth);
@@ -80,6 +72,18 @@ public class SketchViewer {
         resultTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         return resultTable;
+    }
+
+    private void showImageOnDoubleClick(final TableView<SketchRow> resultTable) {
+        resultTable.setOnMousePressed(event->{
+            if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+                var sketchImage=new ImageView(resultTable.getSelectionModel().getSelectedItem().getSketchImage().getImage());
+                var sketchStage=new Stage();
+                sketchStage.setScene(new Scene(new BorderPane(sketchImage) ,sketchImage.getImage().getWidth(), sketchImage.getImage().getHeight()));
+                PssFx.setDefaultIconAndThemeAndOwner(sketchStage, stage);
+                sketchStage.show();
+            }
+        });
     }
 
     private void setImageWidth(final SketchRow sketchRow) {

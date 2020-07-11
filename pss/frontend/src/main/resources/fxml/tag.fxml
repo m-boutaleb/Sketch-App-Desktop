@@ -9,7 +9,7 @@
     <center>
         <HBox alignment="CENTER" prefHeight="48.0" maxWidth="400" minWidth="250" spacing="7" BorderPane.alignment="CENTER">
             <Label text="%tag.name" styleClass="h3Bold"/>
-            <TextField promptText="Insert Tag name" prefHeight="35.0" fx:id="newTag" maxWidth="370.0" minWidth="200"/>
+            <TextField promptText="%tag.insert.name" prefHeight="35.0" fx:id="newTag" maxWidth="370.0" minWidth="200"/>
             <Button text="%tag.save" prefHeight="35.0" onAction="#saveTag"/>
         </HBox>
     </center>
@@ -23,7 +23,7 @@
                     <Insets left="10.0" right="10.0"/>
                 </VBox.margin>
             </Label>
-            <ScrollPane prefHeight="180.0" styleClass="canvasPropertyPane" fitToWidth="true" hbarPolicy="NEVER">
+            <ScrollPane prefHeight="180.0" styleClass="canvasPropertyPane" fitToWidth="true" hbarPolicy="AS_NEEDED">
                 <VBox.margin>
                     <Insets left="12.0" right="12.0"/>
                 </VBox.margin>

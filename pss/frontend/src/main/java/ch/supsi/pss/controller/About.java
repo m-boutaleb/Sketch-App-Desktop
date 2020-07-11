@@ -10,11 +10,11 @@ import java.util.ResourceBundle;
 
 public class About implements Initializable {
     @FXML
-    public Label h2Version;
+    private Label h2Version;
     @FXML
-    public Label h1Version;
+    private Label h1Version;
     @FXML
-    public Label build;
+    private Label build;
 
     @Override
     public void initialize(final URL url, final ResourceBundle resourceBundle) {

@@ -24,15 +24,17 @@ import static ch.supsi.pss.utils.CanvasUtils.*;
 
 public class NewSketch {
     @FXML
-    Canvas canvas;
+    private Canvas canvas;
     @FXML
-    Button save;
+    private Button save;
     @FXML
-    Button erase;
+    private Button erase;
     @FXML
-    Button draw;
+    private Button draw;
     @FXML
-    FlowPane canvasPane;
+    private Button eraseAll;
+    @FXML
+    private FlowPane canvasPane;
     private final Stage stage;
     private final boolean HD;
     private final Set<String> alltags;
@@ -40,7 +42,7 @@ public class NewSketch {
     private boolean alreadySaved;
     private boolean drawing;
 
-    public NewSketch(final String canvasFormat, final Stage stage) {
+    NewSketch(final String canvasFormat, final Stage stage) {
         this.stage=stage;
         this.HD= canvasFormat.equalsIgnoreCase("HD");
         alltags = new HashSet<>();
@@ -51,19 +53,21 @@ public class NewSketch {
         save.setOnMouseClicked(this::save);
         erase.setOnMouseClicked(this::erase);
         draw.setOnMouseClicked(this::draw);
+        eraseAll.setOnMouseClicked(this::eraseAll);
         path=canvas.getGraphicsContext2D();
         canvas.setHeight(HD?CANVAS_HEIGHT_HD:CANVAS_HEIGHT_PORTRAIT);
         canvas.setWidth(HD?CANVAS_WIDTH_HD:CANVAS_WIDTH_PORTRAIT);
         canvasPane.setMaxWidth(canvas.getWidth());
         canvasPane.setMaxHeight(canvas.getHeight());
-        stage.setWidth(canvasPane.getMaxWidth()+15);
-        stage.setHeight(canvasPane.getMaxHeight()+110);
+        stage.setWidth(canvasPane.getMaxWidth()+20);
+        stage.setHeight(canvasPane.getMaxHeight()+120);
         stage.setResizable(false);
         stage.show();
     }
 
-    public Canvas getCanvas() {
-        return canvas;
+    private void eraseAll(final MouseEvent mouseEvent) {
+        drawing=true;
+        path.clearRect(0,0, canvas.getWidth(), canvas.getHeight());
     }
 
     public void save(final MouseEvent mouseEvent) {
@@ -92,7 +96,8 @@ public class NewSketch {
         drawing=false;
     }
 
-    public void draw(final MouseEvent mouseEvent) {
+    private void draw(final MouseEvent mouseEvent) {
+        path.setLineWidth(PEN_WIDTH);
         drawing=true;
         canvas.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
@@ -114,16 +119,17 @@ public class NewSketch {
         path.setStroke(Color.BLACK);
     }
 
-    public void erase(final MouseEvent mouseEvent) {
+    private void erase(final MouseEvent mouseEvent) {
         path.setStroke(Color.WHITE);
+        path.setLineWidth(ERASER_WIDTH);
         drawing=true;
     }
 
-    public boolean isDrawing() {
+    boolean isDrawing() {
         return drawing;
     }
 
-    public Set<String> getAllTags() {
+    Set<String> getAllTags() {
         return alltags;
     }
 }

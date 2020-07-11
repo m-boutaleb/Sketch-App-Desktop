@@ -8,7 +8,7 @@ public class SketchRow {
     private final ImageView sketchImage;
     private final ScrollPane sketchTags;
 
-    public SketchRow(final ImageView sketchImage, final ScrollPane sketchTags) {
+    SketchRow(final ImageView sketchImage, final ScrollPane sketchTags) {
         this.sketchImage = sketchImage;
         this.sketchTags = sketchTags;
         sketchTags.setFitToWidth(true);

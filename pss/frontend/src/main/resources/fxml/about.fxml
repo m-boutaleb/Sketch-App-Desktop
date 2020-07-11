@@ -6,8 +6,8 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-
 <?import javafx.scene.layout.VBox?>
+
 <BorderPane maxHeight="250.0" fx:controller="ch.supsi.pss.controller.About" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
     <center>
         <HBox styleClass="whiteBackground" BorderPane.alignment="CENTER" alignment="CENTER">
@@ -26,7 +26,7 @@
         </HBox>
     </center>
     <top>
-        <HBox alignment="CENTER" prefHeight="100.0" styleClass="defaultBackground"
+        <HBox alignment="CENTER" prefHeight="100.0"
               BorderPane.alignment="CENTER_LEFT">
             <ImageView fitHeight="124.0" fitWidth="141.0" pickOnBounds="true" preserveRatio="true">
                 <HBox.margin>
@@ -39,7 +39,7 @@
         </HBox>
     </top>
     <bottom>
-        <HBox alignment="CENTER" styleClass="defaultBackground" prefHeight="50" BorderPane.alignment="CENTER">
+        <HBox alignment="CENTER" prefHeight="50" BorderPane.alignment="CENTER">
             <Label text="Copyright © 2020" styleClass="h3"/>
         </HBox>
     </bottom>

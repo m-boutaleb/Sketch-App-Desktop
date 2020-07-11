@@ -32,17 +32,6 @@ public class Sketch {
         allTags.add(time.toString());
     }
 
-    private String formatAllTags(){
-        if(allTags==null)
-            return null;
-        StringBuilder tags = new StringBuilder();
-
-        for(String s: allTags)
-            tags.append(s + "\n");
-
-        return tags.toString();
-    }
-
     /**
      * Attenzione costruttore da usare solo per avere un istanza della classe Sketch
      */
@@ -141,7 +130,7 @@ public class Sketch {
         return "\nUIID: " + UUID +
                  "\nAuthor: " + author +
                  "\nTime creation: " + time
-                  + "\nTags: " + formatAllTags();
+                  + "\nTags: " + SketchSerializer.formatAllTags(this);
     }
 
     public void copyOf(final Sketch sketch) {

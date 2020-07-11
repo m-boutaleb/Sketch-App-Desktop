@@ -13,6 +13,7 @@
         </FlowPane>
     </center>
     <top>
+        <ToolBar>
         <HBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
             <Button text="%newsketch.save" styleClass="defaultButton, buttonImage" fx:id="save" >
                 <graphic>
@@ -44,6 +45,17 @@
                     <Insets left="5.0" bottom="5.0" top="5.0" right="5.0"/>
                 </HBox.margin>
             </Button>
+            <Button mnemonicParsing="false" styleClass="defaultButton, buttonImage" text="%newsketch.eraseAll" fx:id="eraseAll">
+                <graphic>
+                    <ImageView fitWidth="20" fitHeight="20" styleClass="buttonImage">
+                        <Image url="@../img/icons/eraseAll.png"/>
+                    </ImageView>
+                </graphic>
+                <HBox.margin>
+                    <Insets left="5.0" bottom="5.0" top="5.0" right="5.0"/>
+                </HBox.margin>
+            </Button>
         </HBox>
+        </ToolBar>
     </top>
 </BorderPane>

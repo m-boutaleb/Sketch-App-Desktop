@@ -1,7 +1,7 @@
 package ch.supsi.pss.model;
 
 public enum Language {
-    ITALIAN("Italian"), ENGLISH("English");
+    ITALIANO("Italiano"), ENGLISH("English");
     private final String language;
     private Language(final String language){
         this.language=language;

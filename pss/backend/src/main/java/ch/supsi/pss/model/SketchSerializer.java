@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.UUID;
 
 public class SketchSerializer {
-    public Sketch createSketchByJSON(final JSONObject sketchJSON){
+    public static Sketch createSketchByJSON(final JSONObject sketchJSON){
         final JSONObject currUser = (JSONObject) sketchJSON.get("User");
         final JSONArray currTags = (JSONArray) sketchJSON.get("Tags");
         final Set<String> allTags = new HashSet<>(currTags);
@@ -17,4 +17,9 @@ public class SketchSerializer {
                 new Author(currUser.get("username").toString()),
                 LocalDateTime.parse(sketchJSON.get("Date").toString()), allTags);
     };
+    public static String formatAllTags(final Sketch sketch){
+        if(sketch.getAllTags()==null)
+            return null;
+        return sketch.getAllTags().stream().reduce("", (s1, s2)->s1.concat("\n").concat(s2));
+    }
 }

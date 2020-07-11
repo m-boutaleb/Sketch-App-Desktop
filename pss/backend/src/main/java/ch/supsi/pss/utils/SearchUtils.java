@@ -4,18 +4,17 @@ import ch.supsi.pss.model.Sketch;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Predicate;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class SearchUtils {
     public static Set<Sketch> searchSketchByTag(Set<Sketch> allSketch, String text){
-        Set<Sketch> results = new HashSet<>();
         final Pattern pattern=Pattern.compile(text);
 
-        for(Sketch sketch: allSketch)
-            for(String tag: sketch.getAllTags())
-                if(pattern.matcher(tag).find())  results.add(sketch);
-
-        return results;
+        final Predicate<Set<String>> matched=tags->tags.parallelStream().map(pattern::matcher).anyMatch(Matcher::find);
+        return allSketch.parallelStream().filter(s->matched.test(s.getAllTags())).collect(Collectors.toSet());
     }
 
 }

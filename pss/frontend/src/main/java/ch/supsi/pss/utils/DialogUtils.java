@@ -5,7 +5,6 @@ import ch.supsi.pss.controller.NewSketch;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
-
 import java.util.Optional;
 
 public class DialogUtils {
@@ -15,13 +14,13 @@ public class DialogUtils {
      * @param headerMessage titolo rappresentativo dell'Errore
      * @param contextMessage messaggio contenente un consiglio per cosa fare per ovviare il problema
      */
-    public static void displayAlert(final String titleMessage, final String headerMessage, final String contextMessage){
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle(titleMessage);
-            alert.setHeaderText(headerMessage);
-            PssFx.setDefaultIconAndTheme((Stage) alert.getDialogPane().getScene().getWindow());
-            alert.setContentText(contextMessage);
-            alert.showAndWait();
+    public static void displayAlert(final String titleMessage, final String headerMessage, final String contextMessage, final Stage ownerStage){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(titleMessage);
+        alert.setHeaderText(headerMessage);
+        PssFx.setDefaultIconAndThemeAndOwner((Stage) alert.getDialogPane().getScene().getWindow(), ownerStage);
+        alert.setContentText(contextMessage);
+        alert.showAndWait();
     }
 
     /**
@@ -39,13 +38,10 @@ public class DialogUtils {
         alert.getButtonTypes().add(ButtonType.YES);
         alert.setTitle(titleMessage);
         alert.setHeaderText(headerMessage);
-        alert.initOwner(stage.getOwner());
-        PssFx.setDefaultIconAndTheme((Stage) alert.getDialogPane().getScene().getWindow());
+        PssFx.setDefaultIconAndThemeAndOwner((Stage) alert.getDialogPane().getScene().getWindow(), stage);
         alert.setContentText(contextMessage);
         Optional<ButtonType> res = alert.showAndWait();
-        if(res.isPresent()) {
-            if(res.get().equals(ButtonType.YES))
-                newSkethController.save(null);
-        }
+        if(res.isPresent()&&res.get().equals(ButtonType.YES))
+            newSkethController.save(null);
     }
 }

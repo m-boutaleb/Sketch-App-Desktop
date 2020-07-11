@@ -4,17 +4,13 @@ import ch.supsi.pss.controller.SketchController;
 import ch.supsi.pss.model.Language;
 import ch.supsi.pss.model.Theme;
 
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class ResourceBundlePss {
-    private final String currentPropertyTheme;
     private static ResourceBundlePss instance;
     private final ResourceBundle langBundles;
     private final ResourceBundle pssBundles;
-
-    public String getCurrentPropertyTheme() {
-        return currentPropertyTheme;
-    }
 
     public ResourceBundle getLangBundles() {
         return langBundles;
@@ -26,29 +22,20 @@ public class ResourceBundlePss {
 
     private ResourceBundlePss(){
         pssBundles=ResourceBundle.getBundle("pss");
-        final SketchController skethController=SketchController.getInstance();
-        Theme theme=skethController.getPrefTheme();
-        switch((theme=((theme==null)?Theme.DEFAULTTHEME:theme))){
-            case DEFAULTTHEME:
-                currentPropertyTheme=getPssBundles().getString("theme.default");
-                break;
-            default:
-                currentPropertyTheme=getPssBundles().getString("theme.dark");
-        }
+        final SketchController sketchController=SketchController.getInstance();
         final Language language=SketchController.getInstance().getPrefLang();
         if(language==null){
             langBundles =ResourceBundle.getBundle("pss_ita");
+            Locale.setDefault(Locale.ITALIAN);
             return;
         }
         switch (language){
             case ENGLISH:
                 langBundles = ResourceBundle.getBundle("pss_en");
-                break;
-            case ITALIAN:
-                langBundles = ResourceBundle.getBundle("pss_ita");
+                Locale.setDefault(Locale.ENGLISH);
                 break;
             default:
-                langBundles =null;
+                langBundles = ResourceBundle.getBundle("pss_ita");
         }
     }
     public static ResourceBundlePss getInstance(){

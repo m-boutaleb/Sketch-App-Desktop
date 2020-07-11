@@ -12,7 +12,7 @@
         <HBox alignment="CENTER" prefHeight="124.0" prefWidth="455.0" spacing="10.0" BorderPane.alignment="CENTER">
             <Label text="%search.insert" styleClass="h3Bold"/>
             <TextField prefHeight="30" prefWidth="150" promptText="%tag.name.prompt.text" fx:id="searchInput"/>
-            <Button text="%search" onMouseClicked="#search" defaultButton="true"
+            <Button text="%search" onAction="#search" defaultButton="true"
                     styleClass="defaultButton, defaultFontBold"/>
         </HBox>
     </center>

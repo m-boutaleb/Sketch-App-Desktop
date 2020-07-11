@@ -74,12 +74,12 @@
     <bottom>
         <HBox alignment="CENTER" BorderPane.alignment="CENTER">
             <Button defaultButton="true" styleClass="defaultButton, defaultFontBold"
-                    onMouseClicked="#createSketch" text="%button.ok">
+                    onAction="#createSketch" text="%button.ok">
                 <HBox.margin>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                 </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onMouseClicked="#cancel" styleClass="defaultButton"
+            <Button mnemonicParsing="false" onAction="#cancel" styleClass="defaultButton"
                     text="%button.cancel" cancelButton="true">
                 <HBox.margin>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
