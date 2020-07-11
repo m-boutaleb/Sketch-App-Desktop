@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.Button?>
+<BorderPane prefHeight="350.0" prefWidth="500.0" fx:controller="ch.supsi.pss.controller.SketchFormat" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+    <center>
+        <VBox alignment="CENTER" prefHeight="554.0" prefWidth="796.0" BorderPane.alignment="CENTER">
+            <HBox prefHeight="554.0" prefWidth="796.0">
+                <VBox alignment="CENTER" prefHeight="485.0" prefWidth="452.0" spacing="5.0">
+                    <HBox.margin>
+                        <Insets/>
+                    </HBox.margin>
+                    <ImageView fitHeight="220.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        <VBox.margin>
+                            <Insets left="10.0"/>
+                        </VBox.margin>
+                        <Image url="@../img/portrait.png"/>
+                    </ImageView>
+                    <RadioButton mnemonicParsing="false" styleClass="h2Bold" selected="true" text="%sketch.portrait">
+                        <VBox.margin>
+                            <Insets left="10.0"/>
+                        </VBox.margin>
+                        <toggleGroup>
+                            <ToggleGroup fx:id="format"/>
+                        </toggleGroup>
+                    </RadioButton>
+                    <Label text="%sketch.portrait.format" styleClass="h3">
+                        <VBox.margin>
+                            <Insets left="10.0"/>
+                        </VBox.margin>
+                    </Label>
+                </VBox>
+                <VBox alignment="CENTER" prefHeight="485.0" prefWidth="495.0" spacing="5.0">
+                    <HBox.margin>
+                        <Insets/>
+                    </HBox.margin>
+                    <ImageView fitHeight="200.0" fitWidth="220.0" pickOnBounds="true" preserveRatio="true">
+                        <VBox.margin>
+                            <Insets right="10.0"/>
+                        </VBox.margin>
+                        <Image url="@../img/hd.png"/>
+                    </ImageView>
+                    <RadioButton mnemonicParsing="false" styleClass="h2Bold" text="%sketch.landscape" toggleGroup="$format">
+                        <VBox.margin>
+                            <Insets right="10.0"/>
+                        </VBox.margin>
+                    </RadioButton>
+                    <Label text="%sketch.landscape.format" styleClass="h3">
+                        <VBox.margin>
+                            <Insets right="10.0"/>
+                        </VBox.margin>
+                    </Label>
+                </VBox>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0"/>
+        </VBox>
+    </center>
+    <top>
+        <Label text="%sketch.format" styleClass="h2Bold" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </BorderPane.margin>
+        </Label>
+    </top>
+    <bottom>
+        <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+            <Button defaultButton="true" styleClass="defaultButton, defaultFontBold"
+                    onAction="#createSketch" text="%button.ok">
+                <HBox.margin>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                </HBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#cancel" styleClass="defaultButton"
+                    text="%button.cancel" cancelButton="true">
+                <HBox.margin>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                </HBox.margin>
+            </Button>
+        </HBox>
+    </bottom>
+</BorderPane>
