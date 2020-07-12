@@ -45,6 +45,7 @@ $ java -jar personal-sketching-system-1.0.1-jar-with-dependencies.jar
 - Tags removal
 - Search by tags
 - Total cancellation sketch 
+- Choice of language
  
 #### Todo-list
 - Edit sketch already saved and closed
