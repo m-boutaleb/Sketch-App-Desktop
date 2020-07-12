@@ -1,5 +1,6 @@
-## Sketch App
+# Sketch App
 Sketch app is a crossplatform application developed with JavaFX that allows you to draw sketches to mitigate boredom.
+![Logo app](./img/logo.png)
 
 ## Table of contents
 * [General Info](#generalinfo)
