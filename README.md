@@ -57,3 +57,8 @@ $ java -jar personal-sketching-system-1.0.1-jar-with-dependencies.jar
 
 ## Contact
 Feel free to contact me at mohamedboutaleb@outlook.it
+
+License
+----
+
+MIT © Mohamed Boutaleb
