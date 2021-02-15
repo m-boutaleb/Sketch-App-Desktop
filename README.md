@@ -42,6 +42,7 @@ To run the created .jar file, it is advisable to use the java JDK to run the fil
 ```sh
 $ java -jar personal-sketching-system-1.0.1-jar-with-dependencies.jar
 ```
+
 ## Features
 #### List of features ready
 - Choice of application theme
