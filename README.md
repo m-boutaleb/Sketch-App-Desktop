@@ -21,6 +21,7 @@ The aim of this project is to mitigate boredom and to be able to make drawings t
 <p align="center">
   <img src="./img/add-tag.png"/>
 </p> 
+
 ## Technologies
 The technologies used for the development of this software are as follows:
 - JDK 13.0.2
