@@ -1,3 +1,4 @@
+[![Deploy Backend](https://github.com/m-boutaleb/Sketch-App-Desktop/actions/workflows/deploy-backend.yml/badge.svg)](https://github.com/m-boutaleb/Sketch-App-Desktop/actions/workflows/deploy-backend.yml)
 # Sketch App
 Sketch app is a crossplatform application developed with JavaFX that allows you to draw sketches to mitigate boredom.
 
