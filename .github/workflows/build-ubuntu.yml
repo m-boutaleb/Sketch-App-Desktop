@@ -24,7 +24,7 @@ jobs:
          restore-keys: ${{ runner.os }}-m2
      - name: Build Backend
        run: mvn -B package --file backend/pom.xml
-     - run: mkdir staging && cp -R frontend/target/*.jar staging
+     - run: mkdir staging && cp -R backend/target/*.jar staging
      - name: Build Frontend
        run: mvn -B package --file frontend/pom.xml
      - uses: actions/upload-artifact@v2
